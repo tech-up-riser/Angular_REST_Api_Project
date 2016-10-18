@@ -1,0 +1,114 @@
+<ul class="main-navigation-menu">
+    <li ui-sref-active="active" ng-if="user.user.role == 'grabee'">
+        <a ui-sref="app.grabee.dashboard">
+            <div class="item-content">
+                <div class="item-media">
+                    <i class="ti-home"></i>
+                </div>
+                <div class="item-inner">
+                    <span class="title" translate="grabee_dashboard_title"> Dashboard </span>
+                </div>
+            </div>
+        </a>
+    </li>
+    <li ui-sref-active="active" ng-if="user.user.role == 'grabee'">
+        <a ui-sref="app.grabee.grabs">
+            <div class="item-content">
+                <div class="item-media">
+                    <i class="ti-new-window"></i>
+                </div>
+                <div class="item-inner">
+                    <span class="title" translate="my_grabs"> My Grabs </span>
+                </div>
+            </div>
+        </a>
+    </li>
+    <li ng-class="{'active open':$state.includes('app.grab.create_grab') || $state.includes('app.grab.create_container') || $state.includes('app.grab.create_pickup')}" ng-if="user.user.role == 'grabee'">
+        <a ui-sref="app.grab.create_grab">
+            <div class="item-content">
+                <div class="item-media">
+                    <i class="ti-truck"></i>
+                </div>
+                <div class="item-inner">
+                    <span class="title" translate="grabee_dashboard_newGrab"> New Grab </span>
+                </div>
+            </div>
+        </a>
+    </li>
+
+    <li ui-sref-active="active" ng-if="user.user.role == 'grabber'">
+        <a ui-sref="app.grabber.dashboard">
+            <div class="item-content">
+                <div class="item-media">
+                    <i class="ti-home"></i>
+                </div>
+                <div class="item-inner">
+                    <span class="title" translate="grabee_dashboard_title"> Dashboard </span>
+                </div>
+            </div>
+        </a>
+    </li>
+    <li ui-sref-active="active" ng-if="user.user.role == 'grabber'">
+        <a ui-sref="app.grabber.grabs">
+            <div class="item-content">
+                <div class="item-media">
+                    <i class="ti-truck"></i>
+                </div>
+                <div class="item-inner">
+                    <span class="title" translate="grabber_dashboard_seeGrabs"> Find Grabs </span>
+                </div>
+            </div>
+        </a>
+    </li>
+    <li ui-sref-active="active" ng-if="user.user.role == 'grabber'">
+        <a ui-sref="app.grabber.bids">
+            <div class="item-content">
+                <div class="item-media">
+                    <i class="ti-new-window"></i>
+                </div>
+                <div class="item-inner">
+                    <span class="title" translate="my_bids"> My Bids </span>
+                </div>
+            </div>
+        </a>
+    </li>
+
+    <li ng-class="{'active open':$state.includes('app.settings')}">
+        <a href="javascript:void(0)">
+            <div class="item-content">
+                <div class="item-media">
+                    <i class="ti-settings"></i>
+                </div>
+                <div class="item-inner">
+                    <span class="title"> {{ 'grabee_dashboard_settings' | translate }} </span><i class="icon-arrow"></i>
+                </div>
+            </div>
+        </a>
+        <ul class="sub-menu">
+            <li ui-sref-active="active">
+                <a ui-sref="app.settings.profile"><span class="title">{{ 'profile' | translate }}</span></a>
+            </li>
+            <li ui-sref-active="active" ng-if="user.user.role == 'grabber'">
+                <a ui-sref="app.settings.grabber_profile"><span class="title">{{ 'grabber_profile' | translate }}</span></a>
+            </li>
+            <li ui-sref-active="active" ng-if="user.user.role == 'grabber'">
+                <a ui-sref="app.settings.grabber_payment"><span class="title">{{ 'grabber_payment' | translate }}</span></a>
+            </li>
+            <li ui-sref-active="active" ng-if="user.user.role == 'grabee'">
+                <a ui-sref="app.settings.payments"><span class="title">{{ 'payment' | translate }}</span></a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.settings.billing"><span class="title">{{ 'billing' | translate }}</span></a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.settings.password"><span class="title">{{ 'password' | translate }}</span></a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.settings.alerts"><span class="title">{{ 'alerts' | translate }}</span></a>
+            </li>
+            <li>
+                <a href ng-click="signOut()"><span class="title">{{ 'logout' | translate }}</span></a>
+            </li>
+        </ul>
+    </li>
+</ul>

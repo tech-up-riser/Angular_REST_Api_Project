@@ -1,0 +1,42 @@
+<div class="space12">
+    <div class="btn-group">
+        <a class="btn btn-sm btn-primary btn-o"
+           ui-sref-active="active"
+           ui-sref="app.settings.password">
+            {{ 'password' | translate }}
+        </a>
+        <a class="btn btn-sm btn-primary btn-o"
+           ui-sref-active="active"
+           ui-sref="app.settings.profile">
+            {{ 'profile' | translate }}
+        </a>
+        <a class="btn btn-sm btn-primary btn-o"
+           ng-if="user.user.role == 'grabee'"
+           ui-sref-active="active"
+           ui-sref="app.settings.payments">
+            {{ 'payment' | translate }}
+        </a>
+        <a class="btn btn-sm btn-primary btn-o"
+           ui-sref-active="active"
+           ui-sref="app.settings.billing">
+            {{ 'billing' | translate }}
+        </a>
+        <a class="btn btn-sm btn-primary btn-o"
+           ui-sref-active="active"
+           ui-sref="app.settings.alerts">
+            {{ 'alerts' | translate }}
+        </a>
+        <a class="btn btn-sm btn-primary btn-o active"
+           ng-if="user.user.role == 'grabber'"
+           ui-sref-active="active"
+           ui-sref="app.settings.grabber_profile">
+            {{ 'grabber_profile' | translate }}
+        </a>
+        <a class="btn btn-sm  btn-primary btn-o"
+           ng-if="user.user.role == 'grabber'"
+           ui-sref-active="active"
+           ui-sref="app.settings.grabber_payment">
+            {{ 'grabber_payment' | translate }}
+        </a>
+    </div>
+</div>

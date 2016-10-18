@@ -1,0 +1,82 @@
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">
+                {{'calendar_title' | translate}}
+            </h1>
+        </div>
+    </div>
+</section>
+
+<div class="container-fluid container-fullw bg-white" ng-controller="CalendarCtrl">
+    <div class="row">
+        <div class="col-md-12 margin-bottom-15">
+            <div class="btn-group" role="group">
+                <button
+                        class="btn btn-primary"
+                        mwl-date-modifier
+                        date="CalendarConfig.viewDate"
+                        decrement="CalendarConfig.calendarView">
+                    <i class="glyphicon glyphicon-menu-left"></i>
+                </button>
+
+                <button
+                        class="btn btn-primary"
+                        mwl-date-modifier
+                        date="CalendarConfig.viewDate"
+                        increment="CalendarConfig.calendarView">
+                    <i class="glyphicon glyphicon-menu-right"></i>
+                </button>
+            </div>
+
+            <button
+                    class="btn btn-primary"
+                    mwl-date-modifier
+                    date="CalendarConfig.viewDate"
+                    set-to-today>
+                {{'calendar_today' | translate}}
+            </button>
+
+            <div class="btn-group dropdown pull-right" uib-dropdown>
+                <button type="button" class="btn btn-primary dropdown-toggle"
+                        uib-dropdown-toggle
+                        aria-haspopup="true"
+                        aria-expanded="false">
+                    {{'grabee_grabs_view' | translate}} <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li>
+                        <a href ng-click="setCalendarView('year')">
+                            {{'calendar_year' | translate}}
+                        </a>
+                    </li>
+                    <li>
+                        <a href ng-click="setCalendarView('month')">
+                            {{'calendar_month' | translate}}
+                        </a>
+                    </li>
+                    <li>
+                        <a href ng-click="setCalendarView('week')">
+                            {{'calendar_week' | translate}}
+                        </a>
+                    </li>
+                    <li>
+                        <a href ng-click="setCalendarView('day')">
+                            {{'calendar_day' | translate}}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <mwl-calendar
+                    view="CalendarConfig.calendarView"
+                    view-date="CalendarConfig.viewDate"
+                    events="CalendarConfig.events"
+                    cell-is-open="true">
+            </mwl-calendar>
+        </div>
+    </div>
+</div>

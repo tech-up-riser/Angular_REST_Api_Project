@@ -1,0 +1,163 @@
+<div class="container-fluid container-fullw bg-white" ng-controller="GrabScheduledCtrl">
+    <div class="row">
+        <div class="col-md-12 panel panel-white clearfix">
+            <div class="panel-body">
+                <div class="panel-header margin-bottom-10">
+                    <h4 class="panel-title margin-bottom-10">
+                        Scheduled for {{Bid.grab.type}}<br>
+                        <b>{{moment(Schedule.date).format("dddd, MMM Do")}}</b><br>
+
+                        <b ng-if="Schedule.time == 'morning'">
+                            Between {{moment().hours(6).format('h A')}} and {{moment().hours(9).format('h A')}}
+                        </b>
+                        <b ng-if="Schedule.time == 'afternoon'">
+                            Between {{moment().hours(12).format('h A')}} and {{moment().hours(17).format('h A')}}
+                        </b>
+                        <b ng-if="Schedule.time == 'evening'">
+                            Between {{moment().hours(17).format('h A')}} and {{moment().hours(21).format('h A')}}
+                        </b>
+                    </h4>
+                </div>
+                <div class="panel-header margin-bottom-10">
+                    <h4 class="panel-title margin-bottom-10">
+                        {{Bid.grab.type}} is on the way
+                    </h4>
+                </div>
+                <table class="table table-condensed">
+                    <tbody>
+                    <tr>
+                        <td colspan="2">
+                            <ui-gmap-google-map center="map.center"
+                                                zoom="map.zoom"
+                                                control='map.control'
+                                                options="map.options">
+
+                                <ui-gmap-marker ng-if="marker.coords.latitude && marker.coords.longitude"
+                                                coords="marker.coords"
+                                                idkey="marker.id"></ui-gmap-marker>
+                            </ui-gmap-google-map>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{ 'grab_create_grab_address' | translate }}:</td>
+                        <td>
+                            {{Bid.grab.address.address}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{ 'grab_published_city' | translate }}:</td>
+                        <td>
+                            {{Bid.grab.address.city}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{ 'grab_published_province' | translate }}:</td>
+                        <td>
+                            {{Bid.grab.address.region}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{ 'grab_published_postalCode' | translate }}:</td>
+                        <td>
+                            {{Bid.grab.address.zipcode}}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <hr>
+                <div class="row bottom-margin-10">
+                    <div class="col-xs-12 margin-bottom-15" ng-show="user.user.role  == 'grabber'">
+                        <form name="updateBidForm" class="form-login" ng-submit="submitUpdateBidForm($event)"
+                              novalidate>
+                            <h4>{{ 'grab_scheduled_completeGrab' | translate }}</h4>
+                            <p>
+                                <span class="btn-group">
+                                    <span class="btn" ng-class="{'btn-primary ': !upPrice, 'btn-default': upPrice}"
+                                          ng-click="upPrice = false;">
+                                        {{Bid.amount}}$
+                                    </span>
+                                    <span class="btn" ng-class="{'btn-primary ': upPrice, 'btn-default': !upPrice}"
+                                          ng-click="upPrice = true;">
+                                        {{ 'grab_scheduled_updatePrice' | translate }}
+                                    </span>
+                                </span>
+                            </p>
+                            <div class="form-group" ng-show="upPrice" style="max-width:156px;">
+                                <div class="input-group"
+                                     ng-class="{'has-error': (updateBidForm.finalAmount.$dirty && updateBidForm.finalAmount.$invalid)}">
+                                    <span class="input-group-addon">$</span>
+                                    <input type="text" class="form-control" name="finalAmount" ng-model="finalAmount"
+                                           required>
+                                    <span class="input-group-addon">.00</span>
+                                </div>
+
+                                <p class="help-block"
+                                   ng-show="(updateBidForm.finalAmount.$dirty && updateBidForm.finalAmount.$invalid)">
+                                  <span class="error-message" ng-show="updateBidForm.finalAmount.$error.required">
+                                    Required
+                                  </span>
+                                </p>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                {{ 'grab_scheduled_markComplete' | translate }}
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-xs-12 margin-bottom-15">
+                        <form name="messagesForm" class="form-login" ng-submit="submitMessagesForm($event)" novalidate>
+                            <h4>{{ 'grab_scheduled_reply' | translate }}</h4>
+                            <div class="form-group"
+                                 ng-class="{'has-error': (messagesForm.message.$dirty && messagesForm.message.$invalid)}">
+                                <textarea class="form-control autosize area-animated msd-elastic: \n;" name="message"
+                                          ng-model="Message.message" required></textarea>
+
+                                <p class="help-block"
+                                   ng-show="(messagesForm.message.$dirty && messagesForm.message.$invalid)">
+                                  <span class="error-message" ng-show="messagesForm.message.$error.required">
+                                    Required
+                                  </span>
+                                </p>
+                            </div>
+                            <button type="submit" class="btn btn-primary" ng-disabled="messageSubmitting">
+                                {{ 'grab_scheduled_submit' | translate }}
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-xs-12 margin-bottom-15" ng-repeat="Message in Messages">
+                        <a ui-sref="app.grabee.grabber({id: Message.user.ID})"
+                           ng-if="Message.user.role == 'grabber' && user.user.role == 'grabee'">
+                            <img class="col-xs-2 fa-round" width="100%"
+                                 ng-src="{{Message.user.client.thumbnail}}"
+                                 src="./assets/images/default-user.png"
+                                 alt="">
+                        </a>
+                        <img class="col-xs-2 fa-round" width="100%"
+                             ng-if="Message.user.role == 'grabber' && user.user.role == 'grabber'"
+                             ng-src="{{Message.user.client.thumbnail}}"
+                             src="./assets/images/default-user.png"
+                             alt="">
+
+                        <div class="col-xs-10 margin-bottom-15">
+                            <p ng-class="{'messagebider': (Message.user.role == 'grabee'), 'messagebid': (Message.user.role == 'grabber')}">
+                                {{Message.message}}
+                            </p>
+                            <h4>
+                                <a ui-sref="app.grabee.grabber">
+                                    {{Message.user.client.fullName}}
+                                </a>
+                            </h4>
+                            <small class="pull-left">
+                                Envoyé {{moment(Message.createdAt).format('MMM MM YYYY, h:mm A')}}
+                            </small>
+                        </div>
+                        <img class="col-xs-2 fa-round" width="100%"
+                             ng-if="Message.user.role == 'grabee'"
+                             ng-src="{{Message.user.client.thumbnail}}"
+                             src="./assets/images/default-user.png"
+                             alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

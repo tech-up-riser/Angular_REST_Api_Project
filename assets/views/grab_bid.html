@@ -1,0 +1,334 @@
+<div class="container-fluid container-fullw bg-white" ng-controller="GrabBidCtrl">
+    <div class="row">
+        <form name="createBidForm" ng-submit="submitCreateBidForm($event)" novalidate>
+            <uib-tabset class="tabbable">
+                <uib-tab active="tabs[0].active" heading="{{ 'grab_published_overview' | translate }}">
+                    <div class="row">
+                        <div class="col-sm-8 margin-bottom-15">
+                            <img ng-src="{{Grab.media.image}}" alt='' style="max-width:100%;">
+                        </div>
+                        <div class="col-sm-8">
+                            <h4>{{Grab.title}}</h4>
+                            <p>{{Grab.description}}</p>
+                            <table class="table table-condensed">
+                                <tbody>
+                                <tr>
+                                    <td>{{ 'grab_published_type' | translate }}:</td>
+                                    <td><a href>{{ Grab.type.label_fr }}</a></td>
+                                </tr>
+                                <tr>
+                                    <td>{{ 'grab_published_category' | translate }}:</td>
+                                    <td><a href>{{ Grab.category.label_fr }}</a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <hr/>
+
+                        <div class="col-sm-8">
+                            <h4>{{ 'grab_published_features' | translate }}</h4>
+                            <table class="table table-condensed">
+                                <tbody>
+                                <tr>
+                                    <td>{{ 'grab_published_size' | translate }}</td>
+                                    <td>
+                                        <a href="#">
+                                            {{Grab.size}}
+                                        </a></td>
+                                </tr>
+                                <tr>
+                                    <td>{{ 'grab_published_weight' | translate }}</td>
+                                    <td>
+                                        <a href="#">
+                                            {{Grab.weight}}
+                                        </a></td>
+                                </tr>
+                                <tr>
+                                    <td>{{ 'grab_published_condition' | translate }}</td>
+                                    <td>
+                                        <a href="#">
+                                            {{Grab.condition}}
+                                        </a></td>
+                                </tr>
+                                <tr>
+                                    <td>{{ 'grab_published_placement' | translate }}</td>
+                                    <td>
+                                        <a href="#">
+                                            {{Grab.placement}}
+                                        </a></td>
+                                </tr>
+                                <tr ng-if="Grab.container_placement">
+                                    <td>Container Placement</td>
+                                    <td>
+                                        <a href="#">
+                                            {{Grab.container_placement}}
+                                        </a></td>
+                                </tr>
+                                <tr>
+                                    <td>{{ 'grab_create_grab_floor' | translate }}</td>
+                                    <td>
+                                        <a href>
+                                            {{Grab.floor}}
+                                        </a></td>
+                                </tr>
+                                <tr>
+                                    <td>{{ 'grab_create_grab_elevator' | translate }}</td>
+                                    <td>
+                                        <a href>
+                                            {{Grab.elevator}}
+                                        </a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-sm-8">
+                            <h4>{{ 'grab_published_location' | translate }}</h4>
+                            <table class="table table-condensed">
+                                <tbody>
+                                <tr>
+                                    <td colspan="2">
+                                        <ui-gmap-google-map center="map.center"
+                                                            zoom="map.zoom"
+                                                            control='map.control'
+                                                            options="map.options">
+
+                                            <!--<ui-gmap-circle ng-if="marker.coords.latitude && marker.coords.longitude"
+                                                            coords="marker.coords"
+                                                            radius="250"
+                                                            idkey="marker.id"></ui-gmap-circle>-->
+                                            <ui-gmap-circle options="{draggable: true}" center='map.center'
+                                                            radius='20'
+                                                            fill='{
+                                                                color: "#08B21F",
+                                                                opacity: 0.3,
+                                                            }'
+                                                            editable='false'
+                                                            visible='true'
+                                                    >
+                                            </ui-gmap-circle>
+                                        </ui-gmap-google-map>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>{{ 'grab_published_postalCode' | translate }}:</td>
+                                    <td>
+                                        {{Grab.address.zipcode}}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-xs-12 col-sm-8" ng-if="Grab.schedules.length">
+                            <h4>{{ 'grab_published_availability' | translate }}</h4>
+                            <div ng-repeat="GrabSchedule in Grab.schedules">
+                                <p>
+                                <span class="btn-group">
+                                    <span class="btn btn-primary btn-o">
+                                        <i class="glyphicon glyphicon-calendar"></i> {{moment.utc(GrabSchedule.date).format('YYYY-MM-DD')}}
+                                    </span>
+                                    <span class="btn"
+                                          ng-class="{'btn-primary ': GrabSchedule.time == 'morning', 'btn-default': GrabSchedule.time !== 'morning'}">
+                                        {{ 'grab_create_grab_time_morning' | translate }}
+                                    </span>
+                                    <span class="btn"
+                                          ng-class="{'btn-primary ': GrabSchedule.time == 'afternoon', 'btn-default': GrabSchedule.time !== 'afternoon'}">
+                                        {{ 'grab_create_grab_time_afternoon' | translate }}
+                                    </span>
+                                    <span class="btn"
+                                          ng-class="{'btn-primary ': GrabSchedule.time == 'evening', 'btn-default': GrabSchedule.time !== 'evening'}">
+                                        {{ 'grab_create_grab_time_night' | translate }}
+                                    </span>
+                                </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab active="tabs[1].active" heading="{{ 'grab_published_bids' | translate }}">
+                    <div class="row">
+                        <div class="bid" ng-repeat="Bid in Bids">
+                            <div class="col-xs-8 col-sm-9 no-padding">
+                                <div class="col-sm-5 col-xs-12">
+                                    <img class="fa-round"
+                                    style="padding:0px;max-height:30px;max-width:30px;float:left;margin-right:10px;"
+                                    width="100%"
+                                    ng-src="{{Bid.user.client.thumbnail}}"
+                                    src="./assets/images/default-user.png"
+                                    alt="{{Bid.user.client.fullName}}">
+                                    <h4 style="padding:0px;float:left;margin-top:7px;">
+                                        {{Bid.user.client.fullName}}
+                                    </h4>
+                                </div>
+                                <div class="col-sm-4 col-xs-12">
+                                    <ul class="list-unstyled">
+                                        <li ng-repeat="BidSchedule in Bid.schedules" style="margin-bottom: 5px">
+                                            <i class="glyphicon glyphicon-calendar"></i> {{moment(BidSchedule.date).format("YYYY/MM/DD")}}<br>
+                                            <small>{{BidSchedule.time}}</small>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <p class="col-sm-3 col-xs-12">
+                                    <span class="badge badge-primary">{{ 'grab_published_available' | translate }}</span>
+                                </p>
+                            </div>
+                            <div class="col-sm-1 col-xs-4">
+                                <p class="text-large">{{Bid.amount}}$</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" ng-if="!Bids.length">
+                        <div class="col-xs-12 col-sm-8">
+                            <h3 class="">{{ 'grab_published_grabber_newBid' | translate }}</h3>
+                            <div class="form-group" style="width: 200px;" ng-class="{'has-error': (createBidForm.amount.$dirty && createBidForm.amount.$invalid)}">
+                                <div class="input-group">
+                                    <span class="input-group-addon">$</span>
+                                    <input type="text" class="form-control" name="total" ng-model="Bid.total" required>
+                                    <span class="input-group-addon">.00</span>
+                                </div>
+                                <!--<div class="alert alert-warning" ng-show="Bid.total < 10" style="width: 400px;">
+                                    <strong>Warning!</strong> Bid amount should be bigger than 10$.
+                                </div>-->
+                                <div class="input-group">
+                                    <p><br>Fees:</p>
+                                    <p>We Grab fees 3% : <span ng-model="Bid.fees">{{Bid.fees}}</span></p>
+                                    <p><br>Taxes:</p>
+                                    <p>GST 5% : <span ng-model="Bid.gst">{{Bid.gst}}</span></p>
+                                    <p>QST 9.975% : <span ng-model="Bid.qst">{{Bid.qst}}</span></p>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">$</span>
+                                    <input type="text" disabled="disabled" class="form-control" name="amount" ng-model="Bid.amount" required>
+                                </div>
+                                <p class="help-block"
+                                   ng-show="(createBidForm.amount.$dirty && createBidForm.amount.$invalid)">
+                                <span class="error-message" ng-show="createBidForm.amount.$error.required">
+                                    Amount is required
+                                </span>
+                                </p>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label">
+                                            {{ 'grab_create_grab_availability' | translate }}
+                                        </label>
+                                        <div class="clip-radio radio-primary">
+                                            <input type="radio" name="_availability" id="_rightAway" ng-value="true" ng-model="tabs[1].rightAway">
+                                            <label for="_rightAway">
+                                                {{ 'grab_create_grab_rightAway' | translate }}
+                                            </label>
+                                            <input type="radio" name="_availability" id="_notRightAway" ng-value="false" ng-model="tabs[1].rightAway">
+                                            <label for="_notRightAway">
+                                                {{ 'grab_create_grab_setDates' | translate }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div>
+                                    <div class="clearfix" ng-if="!tabs[1].rightAway">
+                                        <div ng-controller="AppCtrl" style='padding: 40px;'>
+                                            <label class="control-label">
+                                            {{ 'grab_create_grab_date' | translate }}
+                                            </label>
+                                                <md-content>
+                                                    <md-datepicker ng-model="myDate" placeholder="Enter date" md-min-date="minDate" md-max-date="maxDate" md-date-filter="onlyGrabbeAvailibilities"></md-datepicker>
+                                                </md-content>
+                                        </div>
+                                            <div class="form-group pull-left" style="margin-right:10px;">
+                                                <label class="control-label">
+                                                    {{ 'grab_create_grab_time' | translate }}
+                                                </label>
+                                                <p>
+                                                <span class="btn-group">
+                                                    <span class="btn"
+                                                          ng-class="{'btn-primary ': NewBidSchedule.time == 'morning', 'btn-default': NewBidSchedule.time !== 'morning'}"
+                                                          ng-click="NewBidSchedule.time = 'morning';">
+                                                        {{ 'grab_create_grab_time_morning' | translate }}
+                                                    </span>
+                                                    <span class="btn"
+                                                          ng-class="{'btn-primary ': NewBidSchedule.time == 'afternoon', 'btn-default': NewBidSchedule.time !== 'afternoon'}"
+                                                          ng-click="NewBidSchedule.time = 'afternoon';">
+                                                        {{ 'grab_create_grab_time_afternoon' | translate }}
+                                                    </span>
+                                                    <span class="btn"
+                                                          ng-class="{'btn-primary ': NewBidSchedule.time == 'evening', 'btn-default': NewBidSchedule.time !== 'evening'}"
+                                                          ng-click="NewBidSchedule.time = 'evening';">
+                                                        {{ 'grab_create_grab_time_night' | translate }}
+                                                    </span>
+                                                </span>
+                                                </p>
+                                            </div>
+                                            <div class="form-group pull-left" style="margin-right:10px;">
+                                                <label class="control-label">
+                                                    {{ 'grab_create_grab_actions' | translate }}
+                                                </label>
+                                                <p>
+                                                <span clasgrab_plublished_grabber_placeBids="btn-group">
+                                                    <span class="btn btn-primary" ng-click="addBidSchedule()">{{ 'grab_create_grab_actions_save' | translate }}</span>
+                                                </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix" ng-repeat="BidSchedule in BidSchedules">
+                                            <div class="form-group pull-left" style="margin-right:10px;">
+                                                <p>
+                                                <span class="btn-group">
+                                                    <span class="btn btn-primary btn-o">
+                                                        <i class="glyphicon glyphicon-calendar"></i> {{moment.utc(BidSchedule.date).format('YYYY-MM-DD')}}
+                                                    </span>
+                                                </span>
+                                                </p>
+                                            </div>
+                                            <div class="form-group pull-left" style="margin-right:10px;">
+                                                <p>
+                                                <span class="btn-group">
+                                                    <span class="btn"
+                                                          ng-class="{'btn-primary ': BidSchedule.time == 'morning', 'btn-default': BidSchedule.time !== 'morning'}">
+                                                        {{ 'grab_create_grab_time_morning' | translate }}
+                                                    </span>
+                                                    <span class="btn"
+                                                          ng-class="{'btn-primary ': BidSchedule.time == 'afternoon', 'btn-default': BidSchedule.time !== 'afternoon'}">
+                                                        {{ 'grab_create_grab_time_afternoon' | translate }}
+                                                    </span>
+                                                    <span class="btn"
+                                                          ng-class="{'btn-primary ': BidSchedule.time == 'evening', 'btn-default': BidSchedule.time !== 'evening'}">
+                                                        {{ 'grab_create_grab_time_night' | translate }}
+                                                    </span>
+                                                </span>
+                                                </p>
+                                            </div>
+                                            <div class="form-group pull-left" ng-if="!tabs[1].rightAway" style="margin-right:10px;">
+                                                <p>
+                                                    <span class="btn-group">
+                                                        <span class="btn btn-danger" ng-click="deleteBidSchedule(BidSchedule)">{{ 'grab_create_grab_actions_delete' | translate }}</span>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="form-group">
+                                <label class="control-label">
+                                    {{ 'grab_published_grabber_message' | translate }}
+                                </label>
+                                <textarea class="form-control autosize area-animated"></textarea>
+                            </div> -->
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary"
+                                        translate="grab_published_grabber_placeBid"></button>
+                            </div>
+                            <div id="dialog-confirm" title="{{ 'grabber_acceptFees' | translate }}" hidden>
+                                <p>
+                                    <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+                                    {{ 'grabber_acceptFees_Message' | translate }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </form>
+    </div>
+</div>

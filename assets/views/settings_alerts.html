@@ -1,0 +1,147 @@
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle" translate="sidebar.nav.pages.USERPROFILE">USER PROFILE</h1>
+        </div>
+    </div>
+</section>
+
+<div class="container-fluid container-fullw bg-white" ng-controller="SettingsAlertsCtrl">
+    <div class="row">
+        <div class="col-md-12" ng-include="'./assets/views/partials/profile-menu.html'"></div>
+
+        <div class="col-md-12">
+            <form name="alertsForm" class="form-login" ng-submit="submitAlertsForm($event)" novalidate>
+                <legend>
+                    {{ 'alerts' | translate }}
+                </legend>
+                <fieldset>
+                    <legend>
+                        {{ 'messages' | translate }}
+                    </legend>
+                    <div class="form-group row">
+                        <!-- <div class="checkbox clip-check check-primary checkbox-inline">
+                            <input type="checkbox"
+                                   id="alerts-messages-sms"
+                                   name="alerts-messages-sms"
+                                   ng-model="Alerts.messages.smsAlert"
+                                   ng-true-value="1"
+                                   ng-false-value="0">
+                            <label for="alerts-messages-sms">
+                                SMS
+                            </label>
+                        </div> -->
+                        <div class="checkbox clip-check check-primary checkbox-inline">
+                            <input type="checkbox"
+                                   id="alerts-messages-email"
+                                   name="alerts-messages-email"
+                                   ng-model="Alerts.messages.emailAlert"
+                                   ng-true-value="1"
+                                   ng-false-value="0">
+                            <label for="alerts-messages-email">
+                                {{ 'login_login_email' | translate }}
+                            </label>
+                        </div>
+                        <div class="checkbox clip-check check-primary checkbox-inline">
+                            <input type="checkbox"
+                                   id="alerts-messages-native"
+                                   name="alerts-messages-native"
+                                   ng-model="Alerts.messages.nativeAlert"
+                                   ng-true-value="1"
+                                   ng-false-value="0">
+                            <label for="alerts-messages-native">
+                                {{ 'native' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>
+                        {{ 'booking_alerts' | translate }}
+                    </legend>
+                    <div class="form-group row">
+                        <!-- <div class="checkbox clip-check check-primary checkbox-inline">
+                            <input type="checkbox"
+                                   id="alerts-booking-sms"
+                                   name="alerts-booking-sms"
+                                   ng-model="Alerts.booking.smsAlert"
+                                   ng-true-value="1"
+                                   ng-false-value="0">
+                            <label for="alerts-booking-sms">
+                                SMS
+                            </label>
+                        </div> -->
+                        <div class="checkbox clip-check check-primary checkbox-inline">
+                            <input type="checkbox"
+                                   id="alerts-booking-email"
+                                   name="alerts-booking-email"
+                                   ng-model="Alerts.booking.emailAlert"
+                                   ng-true-value="1"
+                                   ng-false-value="0">
+                            <label for="alerts-booking-email">
+                                {{ 'login_login_email' | translate }}
+                            </label>
+                        </div>
+                        <div class="checkbox clip-check check-primary checkbox-inline">
+                            <input type="checkbox"
+                                   id="alerts-booking-native"
+                                   name="alerts-booking-native"
+                                   ng-model="Alerts.booking.nativeAlert"
+                                   ng-true-value="1"
+                                   ng-false-value="0">
+                            <label for="alerts-booking-native">
+                                {{ 'native' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>
+                        {{ 'calendar_events' | translate }}
+                    </legend>
+                    <div class="form-group row">
+                        <!-- <div class="checkbox clip-check check-primary checkbox-inline">
+                            <input type="checkbox"
+                                   id="alerts-calendar-sms"
+                                   name="alerts-calendar-sms"
+                                   ng-model="Alerts.calendar.smsAlert"
+                                   ng-true-value="1"
+                                   ng-false-value="0">
+                            <label for="alerts-calendar-sms">
+                                SMS
+                            </label>
+                        </div> -->
+                        <div class="checkbox clip-check check-primary checkbox-inline">
+                            <input type="checkbox"
+                                   id="alerts-calendar-email"
+                                   name="alerts-calendar-email"
+                                   ng-model="Alerts.calendar.emailAlert"
+                                   ng-true-value="1"
+                                   ng-false-value="0">
+                            <label for="alerts-calendar-email">
+                                {{ 'login_login_email' | translate }}
+                            </label>
+                        </div>
+                        <div class="checkbox clip-check check-primary checkbox-inline">
+                            <input type="checkbox"
+                                   id="alerts-calendar-native"
+                                   name="alerts-calendar-native"
+                                   ng-model="Alerts.calendar.nativeAlert"
+                                   ng-true-value="1"
+                                   ng-false-value="0">
+                            <label for="alerts-calendar-native">
+                                {{ 'native' | translate }}
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+                <hr>
+                <div class="form-actions">
+                    <button type="submit" ladda="isSubmitting" class="btn btn-primary btn-wide pull-left">
+                        {{ 'grab_create_grab_actions_save' | translate }} <i class="fa fa-arrow-circle-right"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,580 @@
+<script id="searchbox.tpl.html" type="text/ng-template">
+    <input type="text" class="google-autocomplete-searchbox" placeholder="Type your address">
+</script>
+
+<div class="container-fluid container-fullw bg-white" ng-controller="CreateGrabCtrl">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="btn-group-justified">
+                <a class="btn btn-sm btn-wide btn-primary" ng-class="{'btn-o' : Grab.type !== grabType.value}"
+                   ng-repeat="grabType in GrabData.grab.types" ui-sref="{{grabType.sref}}">
+                    <i class="fa" ng-class="grabType.icon"></i>
+                    <span class="hidden-xs">{{language.selected == 'English' ? grabType.label_en : grabType.label_fr}}</span>
+                </a>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="col-md-8">
+
+            <form name="createGrabForm" ng-submit="submitCreateGrabForm($event)" novalidate>
+                <!-- Hiding this for now. <div class="form-group">
+                    <label class="control-label">
+                        Type *
+                    </label>
+                    <p>
+					<span class="btn-group" ng-repeat="item in GrabData.grab.grabtypes">
+						<span class="btn"
+                              ng-class="{'btn-primary ': Grab.grabtype == item.value, 'btn-default': Grab.grabtype !== item.value}"
+                              ng-click="setGrabtype(item.value)">
+							{{ item.label_fr }}
+						</span>
+					</span>
+                    </p>
+                </div> -->
+                <div class="form-group" ng-class="{'has-error': (createGrabForm.select_categories.$error.required && !createGrabForm.select_categories.$pristine)}">
+                    <label class="control-label">
+                        {{ 'grab_create_grab_category' | translate }} *
+                    </label>
+                    <select ng-options="category as category[langMapping[currentLang]] for category in GrabCategories track by category.value"
+                            name="select_categories"class="form-control" ng-model="Grab.category" required>
+                        <option value='' disabled>
+                            {{ 'grab_create_grab_select' | translate }}
+                        </option>
+                    </select>
+
+                    <p ng-show="createGrabForm.select_categories.$error.required && !createGrabForm.select_categories.$pristine" class="help-block">{{ 'grab_create_grab_category_required' | translate }}</p>
+                </div>
+                <div class="form-group" ng-class="{'has-error': (submitted && createGrabForm.select_subcategories.$error.required && !createGrabForm.select_subcategories.$pristine)}">
+                    <label class="control-label">
+                        {{ 'grab_create_grab_subCategory' | translate }} *
+                    </label>
+                    <span>
+                        <select ng-options="subCategory as subCategory[langMapping[currentLang]] for subCategory in GrabSubCategories track by subCategory.value"
+                                ng-model="Grab.subCategory"
+                                class="form-control" >
+                            <option value="" ng-show disabled>
+                                {{ 'grab_create_grab_select' | translate }}
+                            </option>
+                        </select>
+                    </span>
+                        <p ng-show="submitted && createGrabForm.select_subcategories.$error.required && !createGrabForm.select_subcategories.$pristine" class="help-block">{{'grab_create_grab_subcategory_required' | translate }} </p>
+                </div>
+                   <label>
+                        {{ 'grab_create_grab_imageUpload' | translate }} *
+                   </label>
+                <div class="form-group" ng-class="{'has-error': (createGrabForm.file.$dirty && createGrabForm.file.$invalid && createGrabForm.file.$error.required)}">
+                    <div>
+                        <div class="user-image">
+                            <div class="thumbnail margin-bottom-5">
+                                <img ngf-no-object-url="true" ngf-src="imageFile || './assets/images/default-user.png'"
+                                     class="thumb">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="user-image-buttons-edit">
+						<span class="btn btn-danger" ng-click="imageFile = null" ng-show="imageFile">
+							<i class="fa fa-times"></i>
+						</span>
+						<span class="grab-file-upload btn btn-primary">
+							<i class="fa fa-camera"></i>
+                            <input type="file"
+                                   ngf-select
+                                   valid-file 
+                                   ng-model="imageFile"
+                                   name="file"
+                                   accept="image/*"
+                                   ngf-max-size="10MB"
+                                   ngf-model-invalid="errorFile"
+                                   ng-required="true">
+                            </span>
+                    </div>
+
+                    <p class="help-block" ng-show="createGrabForm.file.$dirty && createGrabForm.file.$invalid && createGrabForm.file.$error.required">
+					  <span class="error-message" ng-show="createGrabForm.file.$error.maxSize">
+						File too large {{errorFile.size / 1000000|number:1}}MB: max 10M
+					  </span> 
+                      <span class="error-message" ng-show="createGrabForm.file.$error.required" >
+                      {{ 'grab_create_grab_file_required' | translate }} 
+                      </span>
+                      </p>
+                </div>
+                <div class="form-group" ng-class="{'has-error': (createGrabForm.title.$dirty && createGrabForm.title.$error.required)}">
+                    <label class="control-label">
+                        {{ 'grab_create_grab_title' | translate }} *
+                    </label>
+                    <input type="text" class="form-control" name="title" id="grabTitle" ng-model="Grab.title" required>
+                     <p ng-show="createGrabForm.title.$dirty && createGrabForm.title.$error.required" class="help-block">  {{ 'grab_create_grab_title_required' | translate }} </p>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">
+                        {{ 'grab_create_grab_description' | translate }}
+                    </label>
+					<textarea ng-model="Grab.description"
+                              class="form-control autosize area-animated msd-elastic: \n; ng-valid ng-dirty ng-valid-parse ng-touched"
+                              style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 40px;">
+                    </textarea>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">
+                        {{ 'grab_create_grab_approxsize' | translate }}:
+                    </label>
+                    <p>
+					<span class="btn-group" style="max-width: 354px;">
+						<span class="col-xs-4 btn"
+                              ng-class="{'btn-primary ': Grab.size == 'small', 'btn-default': Grab.size !== 'small'}"
+                              ng-click="Grab.size = 'small';">
+							<img width="100%" src="img/size1.png">
+						</span>
+						<span class="col-xs-4 btn"
+                              ng-class="{'btn-primary ': Grab.size == 'medium', 'btn-default': Grab.size !== 'medium'}"
+                              ng-click="Grab.size = 'medium';">
+							<img width="100%" src="img/size2.png">
+						</span>
+						<span class="col-xs-4 btn"
+                              ng-class="{'btn-primary ': Grab.size == 'large', 'btn-default': Grab.size !== 'large'}"
+                              ng-click="Grab.size = 'large';">
+							<img width="100%" src="img/size3.png">
+						</span>
+					</span>
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">
+                        {{ 'grab_create_grab_weight' | translate }}
+                    </label>
+                    <p>
+					<span class="btn-group">
+						<span class="btn btn-default"
+                              ng-class="{'btn-primary': Grab.weight == 'light', 'btn-default': Grab.weight !== 'light'}"
+                              ng-click="Grab.weight = 'light';">1 ~ 25kg</span>
+						<span class="btn btn-default"
+                              ng-class="{'btn-primary': Grab.weight == 'medium', 'btn-default': Grab.weight !== 'medium'}"
+                              ng-click="Grab.weight = 'medium';">25 ~ 50kg</span>
+						<span class="btn btn-default"
+                              ng-class="{'btn-primary': Grab.weight == 'heavy', 'btn-default': Grab.weight !== 'heavy'}"
+                              ng-click="Grab.weight = 'heavy';">50kg +</span>
+					</span>
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">
+                        {{ 'grab_create_grab_condition' | translate }}
+                    </label>
+                    <p>
+					<span class="btn-group">
+						<span class="btn btn-primary"
+                              ng-class="{'btn-primary': Grab.condition == 'reusable', 'btn-default': Grab.condition !== 'reusable'}"
+                              ng-click="Grab.condition = 'reusable';">
+                            {{ 'grab_create_grab_reusable' | translate }}
+                        </span>
+						<span class="btn btn-default"
+                              ng-class="{'btn-primary': Grab.condition == 'unsuable', 'btn-default': Grab.condition !== 'unsuable'}"
+                              ng-click="Grab.condition = 'unsuable';">
+                            {{ 'grab_create_grab_unusable' | translate }}
+                        </span>
+					</span>
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">
+                        {{ 'grab_create_grab_address' | translate }}
+                    </label>
+                    <div class="clip-radio radio-primary">
+                        <input type="radio"
+                               id="sameAddress"
+                               name="addressSameAsProfile"
+                               ng-value="true"
+                               checked="checked"
+                               ng-model="AddressSameAsProfile">
+                        <label for="sameAddress">
+                            {{ 'grab_create_grab_sameProfile' | translate }}
+                        </label>
+                        <input type="radio"
+                               id="diffAddress"
+                               name="addressSameAsProfile"
+                               ng-value="false"
+                               ng-model="AddressSameAsProfile">
+                        <label for="diffAddress">
+                            {{ 'grab_create_grab_differentAddress' | translate }}
+                        </label>
+                    </div>
+                </div>
+                <div ng-if="AddressSameAsProfile">
+                    <div class="form-group" ng-class="{'has-error': (createGrabForm.addressID.$dirty && createGrabForm.addressID.$invalid)}">
+                        <label class="control-label" for="address-id">
+                            {{'grab_create_grab_existingAddress' | translate}}
+                        </label>
+                        <select id="address-id"
+                                name="addressID"
+                                ng-model="Grab.addressID"
+                                ng-options="UserAddress as UserAddress.name for UserAddress in UserAddresses track by UserAddress.ID"
+                                class="form-control">
+                            <option value=''>
+                                {{'grab_create_grab_profileAddress' | translate}}
+                            </option>
+                        </select>
+
+                        <p class="help-block" ng-show="(createGrabForm.addressID.$dirty && createGrabForm.addressID.$invalid)">
+                            <span class="error-message" ng-show="createGrabForm.addressID.$error.required">
+                                {{'grab_create_grab_addressRequired' | translate}}
+                            </span>
+                        </p>
+                    </div>
+                    <div class="alert alert-danger" ng-hide="(Client.zipcode.indexOf('J5R') > -1) || (Grab.addressID.zipcode.indexOf('J5R') > -1) || (user.user.role == 'grabber')" aria-hidden="false" style="">
+                        {{ 'profile_location_warning' | translate }}
+                    </div>
+                    <div id="adressInProfile">
+                        <p>{{Grab.addressID.address}}</p>
+                        <p>{{Grab.addressID.zipcode}}</p>
+                        <p>{{Grab.addressID.city}}</p>
+                        <p>{{Grab.addressID.region}}</p>
+                        <p>{{Grab.addressID.country}}</p>
+                    </div>
+                    <div data-ng-show="!Grab.addressID.address">
+                        <p>{{Client.address}}</p>
+                        <p>{{Client.zipcode}}</p>
+                        <p>{{Client.city}}</p>
+                        <p>{{Client.region}}</p>
+                        <p>{{Client.country}}</p>
+                    </div>
+                </div>
+                <div ng-if="!AddressSameAsProfile">
+                    <ng-form isolated-form name="newUserAddressForm" class="form-register" novalidate>
+                         <div class="form-group" ng-class="{'has-error': (newUserAddressForm.name.$dirty && newUserAddressForm.name.$invalid)}">
+                            <label class="control-label">
+                                {{'grab_create_grab_addNewAddress' | translate}} *
+                            </label>
+
+                            <input type="text" class="form-control" name="name" ng-model="NewUserAddress.name" required disabled placeholder="{{'grab_completed_grabber_name' | translate}}">
+
+                            <p class="help-block" ng-show="(newUserAddressForm.name.$dirty && newUserAddressForm.name.$invalid)">
+                                <span class="error-message" ng-show="newUserAddressForm.name.$error.required">
+                                    {{'login_registration_address_is_required' | translate}}
+                                </span>
+                            </p>
+                        </div>
+
+                        <div class="form-group">
+                            <ui-gmap-google-map center="map.center"
+                                                zoom="map.zoom"
+                                                control='map.control'
+                                                options="map.options">
+
+                                <ui-gmap-search-box template="searchBox.template"
+                                                    events="searchBox.events"
+                                                    options="searchBox.options"
+                                                    position="'top-center'"></ui-gmap-search-box>
+
+                                <ui-gmap-marker ng-if="marker.coords.latitude && marker.coords.longitude"
+                                                coords="marker.coords"
+                                                idkey="marker.id"></ui-gmap-marker>
+                            </ui-gmap-google-map>
+
+
+                        </div>
+
+                        <div class="alert alert-danger" ng-hide="(NewUserAddress.zipcode == '') || (NewUserAddress.zipcode.indexOf('J5R') > -1) || (user.user.role == 'grabber')" aria-hidden="false" style="">
+                                {{ 'profile_location_warning' | translate }}
+                        </div>
+                        <div id="adressInfo">
+                            <p>{{NewUserAddress.address}}</p>
+                            <p>{{NewUserAddress.zipcode}}</p>
+                            <p>{{NewUserAddress.city}}</p>
+                            <p>{{NewUserAddress.region}}</p>
+                            <p>{{NewUserAddress.country}}</p>
+                        </div>
+                        <!--
+                        <div class="form-group" ng-class="{'has-error': (newUserAddressForm.address.$dirty && newUserAddressForm.address.$invalid)}">
+                            <input type="text" class="form-control" name="address" ng-model="NewUserAddress.address" ng-readonly="true" required placeholder="{{'login_registration_street' | translate}}">
+
+                            <p class="help-block" ng-show="(newUserAddressForm.address.$dirty && newUserAddressForm.address.$invalid)">
+                                <span class="error-message" ng-show="newUserAddressForm.address.$error.required">
+                                    {{'login_registration_address_is_required' | translate}}
+                                </span>
+                            </p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group" ng-class="{'has-error': (newUserAddressForm.zipcode.$dirty && newUserAddressForm.zipcode.$invalid)}">
+                                    <input class="form-control" type="text" name="zipcode" ng-model="NewUserAddress.zipcode" ng-readonly="true" placeholder="{{'login_registration_postal' | translate}}">
+
+                                    <p class="help-block" ng-show="(newUserAddressForm.zipcode.$dirty && newUserAddressForm.zipcode.$invalid)">
+                                        <span class="error-message" ng-show="newUserAddressForm.zipcode.$error.required">
+                                            {{'login_registration_zipcode_is_required'  | translate}}
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group" ng-class="{'has-error': (newUserAddressForm.city.$dirty && newUserAddressForm.city.$invalid)}">
+                                    <input class="form-control" type="text" name="city" ng-model="NewUserAddress.city" ng-readonly="true" required placeholder="{{'login_registration_city' | translate}}">
+
+                                    <p class="help-block" ng-show="(newUserAddressForm.city.$dirty && newUserAddressForm.city.$invalid)">
+                                        <span class="error-message" ng-show="newUserAddressForm.city.$error.required">
+                                            {{'login_registration_city_is_required' | translate}}
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error': (newUserAddressForm.region.$dirty && newUserAddressForm.region.$invalid)}">
+                            <input class="form-control" type="text" name="region" ng-model="NewUserAddress.region" ng-readonly="true" required placeholder="{{'login_registration_region' | translate}}">
+
+                            <p class="help-block" ng-show="(newUserAddressForm.region.$dirty && newUserAddressForm.region.$invalid)">
+                                <span class="error-message" ng-show="newUserAddressForm.region.$error.required">
+                                    {{'login_registration_region_is_required' | translate}}
+                                </span>
+                            </p>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error': (newUserAddressForm.country.$dirty && newUserAddressForm.country.$invalid)}">
+                            <input class="form-control" type="text" name="country" ng-model="NewUserAddress.country" ng-readonly="true" required placeholder="{{'login_registration_country' | translate}}">
+
+                            <p class="help-block" ng-show="(newUserAddressForm.country.$dirty && newUserAddressForm.country.$invalid)">
+                                <span class="error-message" ng-show="newUserAddressForm.country.$error.required">
+                                    {{'login_registration_country_is_required' | translate}}
+                                </span>
+                            </p>
+                        </div>
+                        <div class="form-actions">
+                            <div class="margin-bottom-15">
+                                <button type="button" class="btn btn-primary" ng-disabled="newUserAddressSubmitting" ng-click="submitNewUserAddressForm($event)">
+                                    {{'grab_create_grab_addThisAddressToProfile' | translate}}
+                                </button>
+                            </div>
+                        </div>-->
+                    </ng-form>  
+                </div>
+                <div class="form-group">
+                    <label class="control-label">
+                        {{ 'grab_create_grab_placement' | translate }}
+                    </label>
+                    <div class="clip-radio radio-primary">
+                        <input type="radio" name="placement" id="inside" value="inside" ng-model="Grab.placement"
+                               ng-click="Grab.container = '0'">
+                        <label for="inside">
+                            {{ 'grab_create_grab_inside' | translate }}
+                        </label>
+                        <input type="radio" name="placement" id="outside" value="outside" ng-model="Grab.placement">
+                        <label for="outside">
+                            {{ 'grab_create_grab_outside' | translate }}
+                        </label>
+                    </div>
+                </div>
+                <!--<div class="form-group" ng-hide="Grab.placement == 'inside'">
+                    <label>
+                        {{ 'grab_create_grab_container' | translate }}
+                    </label>
+                    <div class="clip-radio radio-primary">
+                        <input type="radio" name="in_container" id="in_container" value="1" ng-model="Grab.container">
+                        <label for="in_container">
+                            {{'grab_create_grab_yes' | translate}}
+                        </label>
+                        <input type="radio" name="not_in_container" id="not_in_container" value="0"
+                               ng-model="Grab.container">
+                        <label for="not_in_container">
+                            {{'grab_create_grab_no' | translate}}
+                        </label>
+                    </div>
+                </div>-->
+                <div class="row" ng-show="Grab.placement == 'inside'">
+                    <div class="form-group col-md-6">
+                        <label class="control-label">
+                            {{ 'grab_create_grab_floor' | translate }}
+                        </label>
+                        <div class="form-group" ng-class="{'has-error': (createGrabForm.select_floors.$error.required && !createGrabForm.select_floors.$pristine)}">
+                            <select ng-options="floor as floor[langMapping[currentLang]] for floor in GrabData.floors track by floor.value"
+                                    ng-model="Grab.floor"
+                                    name="select_floors" class="form-control" ng-required="Grab.placement == 'inside'">
+                                <option value='' disabled>
+                                    {{'grab_create_grab_selectFloor' | translate}}
+                                </option>
+                            </select>
+                            <p ng-show="(createGrabForm.select_floors.$error.required && !createGrabForm.select_floors.$pristine)" class="help-block">{{ 'grab_create_grab_floor_required' | translate }}</p>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label">
+                            {{ 'grab_create_grab_elevator' | translate }}
+                        </label>
+                        <div class="clip-radio radio-primary">
+                            <input type="radio" id="elavator_no" name="elavator" value="0" ng-model="Grab.elevator">
+                            <label for="elavator_no">
+                                {{'grab_create_grab_no' | translate}}
+                            </label>
+                            <input type="radio" id="elavator_yes" name="elavator" value="1" ng-model="Grab.elevator">
+                            <label for="elavator_yes">
+                                {{'grab_create_grab_yes' | translate}}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-show="Grab.placement == 'outside'">
+                    <label class="control-label">
+                        {{ 'grab_create_grab_location' | translate }}
+                    </label>
+                    <div class="clip-radio radio-primary">
+                        <input type="radio" name="container_placement" id="entrance" value="entrance" ng-model="Grab.container_placement">
+                        <label for="entrance">
+                            {{ 'grab_create_grab_entrance' | translate }}
+                        </label>
+                        <input type="radio" name="container_placement" id="curb" value="curb" ng-model="Grab.container_placement">
+                        <label for="curb">
+                            {{ 'grab_create_grab_curb' | translate }}
+                        </label>
+                        <input type="radio" name="container_placement" id="backyard" value="backyard" ng-model="Grab.container_placement">
+                        <label for="backyard">
+                            {{ 'grab_create_grab_backyard' | translate }}
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">
+                        {{ 'grab_create_grab_availability' | translate }}
+                    </label>
+                    <div class="clip-radio radio-primary">
+                        <input type="radio" name="rightAway" id="available" ng-value="true" ng-model="rightAway">
+                        <label for="available">
+                            {{ 'grab_create_grab_rightAway' | translate }}
+                        </label>
+                        <input type="radio" name="rightAway" id="not-available" ng-value="false" ng-model="rightAway">
+                        <label for="not-available">
+                            {{ 'grab_create_grab_setDates' | translate }}
+                        </label>
+                    </div>
+                </div>
+                <div ng-show="!rightAway">
+                    <div class="clearfix" ng-if="!rightAway">
+                        <div class="form-group pull-left margin-right-10" ng-controller="DatepickerDemoCtrl">
+                            <label class="control-label">
+                                {{ 'grab_create_grab_date' | translate }}
+                            </label>
+                            <div>
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        uib-datepicker-popup="{{format}}"
+                                        popup-placement="top-left"
+                                        show-button-bar="false"
+                                        ng-model="NewGrabSchedule.date"
+                                        min-date="minDate"
+                                        max-date="maxDate"
+                                        is-open="opened"
+                                        ng-required="true"
+                                        close-text="Close"
+                                        ng-change="whichTime()"
+                                        ng-click="open($event)">
+										<i class="glyphicon glyphicon-calendar"></i> {{NewGrabSchedule.date | date:'MM/dd/yyyy' }}
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group pull-left" style="margin-right:10px;">
+                            <label class="control-label">
+                                {{ 'grab_create_grab_time' | translate }}
+                            </label>
+                            <p>
+                                <span class="btn-group">
+                                    <button class="btn"
+                                          type="button"
+                                          id="morning"
+                                          ng-class="{'btn-primary ': NewGrabSchedule.time == 'morning', 'btn-default': NewGrabSchedule.time !== 'morning'}"
+                                          ng-click="NewGrabSchedule.time = 'morning';">
+                                        {{ 'grab_create_grab_time_morning' | translate }}
+                                    </button>
+                                    <button class="btn"
+                                          type="button"
+                                          id="afternoon"
+                                          ng-class="{'btn-primary ': NewGrabSchedule.time == 'afternoon', 'btn-default': NewGrabSchedule.time !== 'afternoon'}"
+                                          ng-click="NewGrabSchedule.time = 'afternoon';">
+                                        {{ 'grab_create_grab_time_afternoon' | translate }}
+                                    </button>
+                                    <button class="btn"
+                                          type="button"
+                                          id="evening"
+                                          ng-class="{'btn-primary ': NewGrabSchedule.time == 'evening', 'btn-default': NewGrabSchedule.time !== 'evening'}"
+                                          ng-click="NewGrabSchedule.time = 'evening';">
+                                        {{ 'grab_create_grab_time_night' | translate }}
+                                    </button>
+                                </span>
+                            </p>
+                        </div>
+                        <div class="form-group pull-left" style="margin-right:10px;">
+                            <label class="control-label">
+                                {{ 'grab_create_grab_actions' | translate }}
+                            </label>
+                            <p>
+                                <span class="btn-group">
+                                    <span class="btn btn-primary" ng-click="addGrabSchedule()">{{ 'grab_create_grab_schedule_save' | translate }}</span>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="clearfix" ng-repeat="GrabSchedule in GrabSchedules">
+                        <div class="form-group pull-left" style="margin-right:10px;">
+                            <p>
+								<span class="btn-group">
+									<span class="btn btn-primary btn-o">
+										<i class="glyphicon glyphicon-calendar"></i> {{GrabSchedule.date | date:'MM/dd/yyyy' }}
+									</span>
+								</span>
+                            </p>
+                        </div>
+                        <div class="form-group pull-left" style="margin-right:10px;">
+                            <p>
+								<span class="btn-group">
+                                    <span class="btn"
+                                          ng-class="{'btn-primary ': GrabSchedule.time == 'morning', 'btn-default': GrabSchedule.time !== 'morning'}"
+                                          ng-click="GrabSchedule.time = 'morning';">
+                                        {{ 'grab_create_grab_time_morning' | translate }}
+                                    </span>
+                                    <span class="btn"
+                                          ng-class="{'btn-primary ': GrabSchedule.time == 'afternoon', 'btn-default': GrabSchedule.time !== 'afternoon'}"
+                                          ng-click="GrabSchedule.time = 'afternoon';">
+                                        {{ 'grab_create_grab_time_afternoon' | translate }}
+                                    </span>
+                                    <span class="btn"
+                                          ng-class="{'btn-primary ': GrabSchedule.time == 'evening', 'btn-default': GrabSchedule.time !== 'evening'}"
+                                          ng-click="GrabSchedule.time = 'evening';">
+                                        {{ 'grab_create_grab_time_night' | translate }}
+                                    </span>
+                                </span>
+                            </p>
+                        </div>
+                        <div class="form-group pull-left" ng-if="!rightAway" style="margin-right:10px;">
+                            <p>
+								<span class="btn-group">
+									<span class="btn btn-danger" ng-click="deleteGrabSchedule(GrabSchedule)">{{ 'grab_create_grab_actions_delete' | translate }}</span>
+								</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-group-justified">
+                    <button ng-hide="((AddressSameAsProfile && (Client.zipcode.indexOf('J5R') < 0)) || (AddressSameAsProfile && (Grab.addressID.zipcode.indexOf('J5R') < 0)) || (!AddressSameAsProfile && (NewUserAddress.zipcode != '') && (NewUserAddress.zipcode.indexOf('J5R') < 0))) && (user.user.role == 'grabee')" ng-click="submitted=true"type="button"
+                            class="btn btn-sm btn-wide btn-primary"
+                            style="width: 33%;"
+                            ng-click="saveCreateGrab()"
+                            translate="grab_create_grab_actions_save">
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-sm btn-wide btn-danger"
+                            style="width: 33%;"
+                            ng-click="cancelCreateGrab()"
+                            translate="grab_create_grab_actions_cancel">
+                    </button>
+
+                    <button type="submit"
+                            ng-disabled="grabSubmitting"
+                            class="btn btn-sm btn-wide btn-success"
+                            style="width: 33%;"
+                            ng-click="publishGrab()"
+                            translate="grab_create_grab_actions_publish">
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

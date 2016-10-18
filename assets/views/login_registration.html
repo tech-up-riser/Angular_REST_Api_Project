@@ -1,0 +1,197 @@
+<script id="searchbox.tpl.html" type="text/ng-template">
+    <input type="text" class="google-autocomplete-searchbox" placeholder="{{ 'login_registration_type_your_address' | translate }}">
+</script>
+
+<div class="row" ng-controller="RegistrationCtrl">
+    <div class="main-login col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+        <div class="text-right">
+            <span ng-repeat="(localeId, langName) in language.available">
+                <a ng-if="langName != language.active" ng-click="language.set(localeId, $event)" href="#"
+                   class="menu-toggler"> {{langName}} </a>
+            </span>
+        </div>
+        <div class="logo text-center">
+            <img class="text-center" src="img/GRAB_2.png"/>
+        </div>
+        <div class="box-register">
+            <form name="registrationForm" class="form-register" ng-submit="submitRegistrationForm($event)" novalidate>
+                <h1 class="login" translate="login_registration_title">
+                    Sign Up
+                </h1>
+                <div class="form-group">
+                    <div class="clip-radio radio-primary">
+                        <input type="radio" id="is-grabee" name="isGrabee" value="grabee" ng-model="Client.role">
+                        <label for="is-grabee" translate="login_registration_is_grabee">
+                            User
+                        </label>
+                        <input type="radio" id="is-grabber" name="isGrabber" value="grabber" ng-model="Client.role">
+                        <label for="is-grabber" translate="login_registration_is_grabber" >
+                            Grabber
+                        </label>
+                    </div>
+                </div>
+                <p translate="login_registration_legend1">
+                    Enter your account details below:
+                </p>
+                <div class="form-group"
+                     ng-class="{'has-error': (registrationForm.email.$dirty && registrationForm.email.$invalid) || invalidAttributes.email}">
+                    <span class="input-icon">
+                      <input type="email" class="form-control" name="email" ng-model="Client.email" required
+                             placeholder="{{ 'login_registration_email' | translate }}">
+                      <i class="fa fa-envelope"></i>
+                    </span>
+
+                    <p class="help-block"
+                       ng-show="(registrationForm.email.$dirty && registrationForm.email.$invalid) || invalidAttributes.email">
+                        <span class="error-message"
+                              ng-show="registrationForm.email.$error.required || (invalidAttributes.email && invalidAttributes.email._empty)"
+                              translate="login_registration_email_is_required">
+                            Email is required
+                        </span>
+                        <span ng-show="registrationForm.email.$error.email">Invalid email address</span>
+                        <span ng-show="invalidAttributes.email">
+                            {{ 'login_registration_email_exists' | translate }}
+                        </span>
+                    </p>
+                </div>
+                <div class="form-group"
+                     ng-class="{'has-error': (registrationForm.password.$dirty && registrationForm.password.$invalid)}">
+                    <span class="input-icon">
+                    <input type="password" class="form-control" id="password" name="password" ng-model="Client.password"
+                           required ng-minlength="6" placeholder="{{ 'login_registration_password' | translate }}">
+                    <i class="fa fa-lock"></i>
+                    </span>
+
+                    <p class="help-block"
+                       ng-show="registrationForm.password.$dirty && registrationForm.password.$invalid">
+                      <span class="error-message"
+                            ng-show="registrationForm.password.$error.required || (invalidAttributes.password && invalidAttributes.password._empty)"
+                            translate="login_registration_password_is_required">
+                        Password is required
+                      </span>
+
+                      <span class="error-message"
+                              ng-show="registrationForm.password.$error.minlength"
+                              translate="login_registration_password_should_be_6_char">
+                        Your password must contain at least 6 characters.
+                      </span>
+                    </p>
+                </div>
+                <div class="form-group"
+                     ng-class="{'has-error': registrationForm.passwordConfirmation.$error.noMatch && registrationForm.passwordConfirmation.$invalid}">
+                    <span class="input-icon">
+                    <input type="password" class="form-control" id="passwordConfirmation" name="passwordConfirmation"
+                           ng-model="Client.passwordConfirmation" required
+                           placeholder="{{ 'login_registration_passwordAgain' | translate }}">
+                    <i class="fa fa-lock"></i>
+                    </span>
+
+                    <p class="help-block"
+                            ng-show="registrationForm.passwordConfirmation.$dirty && registrationForm.passwordConfirmation.$invalid">
+                        <span ng-show="!registrationForm.passwordConfirmation.$error.required && registrationForm.passwordConfirmation.$error.noMatch && registrationForm.password.$dirty">Passwords do not match</span>
+                    </p>
+                </div>
+                <p translate="login_registration_legend2">
+                    Enter your personal details below:
+                </p>
+                <div class="form-group"
+                     ng-class="{'has-error': (registrationForm.fullName.$dirty && registrationForm.fullName.$invalid) || invalidAttributes.fullName}">
+                    <input type="text" class="form-control" name="fullName" ng-model="Client.fullName" required
+                           placeholder="{{ 'login_registration_fullName' | translate }}">
+
+                    <p class="help-block"
+                       ng-show="(registrationForm.fullName.$dirty && registrationForm.fullName.$invalid) || invalidAttributes.fullName">
+                      <span class="error-message"
+                            ng-show="registrationForm.fullName.$error.required || (invalidAttributes.fullName && invalidAttributes.fullName._empty)"
+                            translate="login_registration_full_name_is_required">
+                        Full name is required
+                      </span>
+                    </p>
+                </div>
+                <div class="form-group" ng-class="{'has-error': (Client.city == '')}">
+                    <ui-gmap-google-map center="map.center"
+                                        zoom="map.zoom"
+                                        control='map.control'
+                                        options="map.options">
+
+                        <ui-gmap-search-box template="searchBox.template"
+                                            events="searchBox.events"
+                                            options="searchBox.options"
+                                            position="'top-center'"></ui-gmap-search-box>
+
+                        <ui-gmap-marker ng-if="marker.coords.latitude && marker.coords.longitude"
+                                        coords="marker.coords"
+                                        idkey="marker.id"></ui-gmap-marker>
+                    </ui-gmap-google-map>
+                    <p class="help-block"
+                           ng-show="(Client.city == '')">
+                      <span class="error-message"
+                            translate="login_registration_address_is_required2">
+                        Address is required
+                      </span>
+                    </p>
+                </div>
+                <div id="adressInfo">
+                    <p>{{Client.address}}</p>
+                    <p>{{Client.zipcode}}</p>
+                    <p>{{Client.city}}</p>
+                    <p>{{Client.region}}</p>
+                    <p>{{Client.country}}</p>
+                </div>
+                <div class="alert alert-danger" ng-hide="(Client.city == 'La Prairie') || (Client.city == '') || (Client.role == 'grabber')">
+                    {{ 'login_registration_location_warning' | translate }}
+                </div>
+                <div class="form-group"
+                     ng-class="{'has-error': (registrationForm.agree.$dirty && registrationForm.agree.$invalid)}">
+                    <div class="checkbox clip-check check-primary">
+                        <input type="checkbox" id="agree" name="agree" ng-model="Client.agree" required>
+                        <label for="agree">
+                            <span translate="login_registration_agree">I agree</span>
+
+                            <a href="#" ng-click="openTerms()" translate="login_registration_termsLink">
+                                to the terms and services
+                            </a>
+                        </label>
+                    </div>
+
+                    <p class="help-block" ng-show="(registrationForm.agree.$dirty && registrationForm.agree.$invalid)">
+                      <span class="error-message" ng-show="registrationForm.agree.$error.required"
+                            translate="login_registration_agree_is_required">
+                        You must agree to the Terms and conditions and Privacy Policy to create your account.
+                      </span>
+                    </p>
+                </div>
+                <div class="form-actions">
+                    <div class="text-center margin-bottom-15">
+                        <button type="button"
+                                ng-disabled="!facebookReady"
+                                ng-click="IntentLogin()"
+                                ladda="facebookLoginRequest"
+                                style="background:#3b5998;border-color:#3b5998;"
+                                class="btn btn-primary btn-wider">
+                            <i class="fa fa-facebook"></i> {{ 'login_registration_link_with_facebook' | translate }}
+                        </button>
+                    </div>
+                    <div class="text-center margin-bottom-15">
+                        <button type="submit" class="btn btn-primary btn-wider"
+                                ng-disabled="(Client.city == '')"
+                                translate="login_registration_createAccount">
+                            Create account <i class="fa fa-arrow-circle-right"></i>
+                        </button>
+                    </div>
+                    <div class="text-center">
+                        <span translate="login_registration_already">
+                            Already have an account?
+                        </span>
+                        <a ui-sref="login.signin" translate="login_registration_login">
+                            Login.
+                        </a>
+                    </div>
+                </div>
+            </form>
+            <div class="copyright">
+                {{app.year}} &copy; {{ app.name }}
+            </div>
+        </div>
+    </div>
+</div>

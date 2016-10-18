@@ -1,0 +1,215 @@
+<div class="container-fluid container-fullw bg-white" ng-controller="GrabDeliveredCtrl">
+    <div class="row">
+        <div class="col-md-8">
+            <form name="deliveryForm" ng-submit="submitDeliveryForm($event)" novalidate>
+                <div class="panel panel-white">
+                    <div class="panel-heading text-center">
+                        <h4 class="panel-title">
+                            {{ 'grab_completed_grabber_completed_grabber_title' | translate }}
+                        </h4>
+                    </div>
+                    <div class="panel-body panel-alert text-center">
+                        <p>
+                            {{ 'grab_completed_grabber_completed_grabber_desc1' | translate }}
+                        </p>
+                        <p>
+                            {{ 'grab_completed_grabber_completed_grabber_desc2' | translate }}
+                        </p>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group" ng-class="{'has-error': (deliveryForm.name.$dirty && deliveryForm.name.$invalid)}">
+                            <label class="control-label" for="name">
+                                {{ 'grab_completed_grabber_name' | translate }}
+                            </label>
+                            <input type="text" class="form-control" id="name" name="name" ng-model="Delivery.name" ng-readonly="deliveryReadonly" required>
+
+                            <p class="help-block" ng-show="(deliveryForm.name.$dirty && deliveryForm.name.$invalid)">
+                                <span class="error-message" ng-show="deliveryForm.name.$error.required">
+                                    Required
+                                </span>
+                            </p>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error': (deliveryForm.address.$dirty && deliveryForm.address.$invalid)}">
+                            <label class="control-label" for="address">
+                                {{ 'grab_completed_grabber_address' | translate }}
+                            </label>
+                            <input type="text" class="form-control" id="address" name="address" ng-model="Delivery.address" ng-readonly="deliveryReadonly" required>
+
+                            <p class="help-block" ng-show="(deliveryForm.address.$dirty && deliveryForm.address.$invalid)">
+                                <span class="error-message" ng-show="deliveryForm.address.$error.required">
+                                    Required
+                                </span>
+                            </p>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error': (deliveryForm.category.$dirty && deliveryForm.category.$invalid)}">
+                            <label class="block" for="category">
+                                {{ 'grab_completed_grabber_category' | translate }}
+                            </label>
+                            <select name="category"
+                                    id="category"
+                                    class="form-control"
+                                    ng-options="item.label_fr for item in GrabData.grab.dropoffs"
+                                    ng-model="Delivery.category"
+                                    ng-disabled="deliveryReadonly">
+                                <option value="" disabled>Sélectionner</option>
+                            </select>
+
+                            <p class="help-block" ng-show="(deliveryForm.category.$dirty && deliveryForm.category.$invalid)">
+                                <span class="error-message" ng-show="deliveryForm.category.$error.required">
+                                    Required
+                                </span>
+                            </p>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error': (deliveryForm.date.$dirty && deliveryForm.date.$invalid)}">
+                            <label class="control-label" for="date">
+                                {{ 'grab_completed_grabber_date' | translate }}
+                            </label>
+                            <input type="text"
+                                   name="date"
+                                   id="date"
+                                   class="form-control"
+                                   uib-datepicker-popup="{{format}}"
+                                   ng-disabled="deliveryReadonly"
+                                   ng-model="Delivery.date"
+                                   ng-required="{{$scope.deliverySubmitting}}"
+                                   close-text="Close"
+                                   is-open="DeliveryDatePopupOpen"
+                                   ng-click="openDeliveryDatePopupOpen($event)">
+
+                            <p class="help-block" ng-show="(deliveryForm.date.$dirty && deliveryForm.date.$invalid)">
+                                <span class="error-message" ng-show="deliveryForm.date.$error.required">
+                                    Required
+                                </span>
+                            </p>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error': (deliveryForm.time.$dirty && deliveryForm.time.$invalid)}">
+                            <label class="block" for="time">
+                                {{ 'grab_completed_grabber_time' | translate }}
+                            </label>
+                            <select name="time" id="time" class="form-control" ng-model="Delivery.time" ng-disabled="deliveryReadonly">
+                                <option value="" disabled>Sélectionner</option>
+                                <option value="morning">
+                                    {{ 'grab_create_grab_time_morning' | translate }}
+                                </option>
+                                <option value="afternoon">
+                                    {{ 'grab_create_grab_time_afternoon' | translate }}
+                                </option>
+                                <option value="evening">
+                                    {{ 'grab_create_grab_time_night' | translate }}
+                                </option>
+                            </select>
+
+                            <p class="help-block" ng-show="(deliveryForm.time.$dirty && deliveryForm.time.$invalid)">
+                                <span class="error-message" ng-show="deliveryForm.time.$error.required">
+                                    Required
+                                </span>
+                            </p>
+                        </div>
+                        <div class="form-group" ng-hide="deliveryReadonly">
+                            <button type="submit" ng-disabled="deliverySubmitting" class="btn btn-large btn-primary">
+                                {{ 'grab_completed_grabber_submit' | translate}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-12 margin-bottom-10">
+            <h3>
+                {{ 'grab_completed_grabber_reviewGrabee' | translate }}
+            </h3>
+        </div>
+        <div class="col-md-12">
+            <div class="row">
+                <form name="feedbackForm" ng-submit="submitFeedbackForm($event)" novalidate>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>
+                                        {{'grab_completed_onTime' | translate}}
+                                    </label>
+                                    <div class="margin-bottom-15 text-extra-large">
+                                        <uib-rating max="feedbackMax"
+                                                    ng-model="Feedback.onTime"
+                                                    readonly="feedbackReadonly"
+                                                    aria-labelledby="default-rating"></uib-rating>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>
+                                        {{ 'grab_completed_curteous' | translate }}
+                                    </label>
+                                    <div class="margin-bottom-15 text-extra-large">
+                                        <uib-rating max="feedbackMax"
+                                                    ng-model="Feedback.curteous"
+                                                    readonly="feedbackReadonly"
+                                                    aria-labelledby="default-rating"></uib-rating>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>
+                                        {{ 'grab_completed_useful' | translate }}
+                                    </label>
+                                    <div class="margin-bottom-15 text-extra-large">
+                                        <uib-rating max="feedbackMax"
+                                                    ng-model="Feedback.useful"
+                                                    readonly="feedbackReadonly"
+                                                    aria-labelledby="default-rating"></uib-rating>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>
+                                        {{ 'grab_completed_cleanliness' | translate }}
+                                    </label>
+                                    <div class="margin-bottom-15 text-extra-large">
+                                        <uib-rating max="feedbackMax"
+                                                    ng-model="Feedback.cleanliness"
+                                                    readonly="feedbackReadonly"
+                                                    aria-labelledby="default-rating"></uib-rating>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group" ng-class="{'has-error': (feedbackForm.comment.$dirty && feedbackForm.comment.$invalid)}">
+                            <label class="control-label" for="comment">
+                                {{ 'grab_completed_comments' | translate }}
+                            </label>
+                            <textarea id="comment"
+                                      name="comment"
+                                      ng-model="Feedback.comment"
+                                      ng-readonly="feedbackReadonly"
+                                      required
+                                      class="form-control autosize area-animated msd-elastic: \n; ng-valid ng-dirty ng-valid-parse ng-touched"
+                                      style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 134px;">
+                            </textarea>
+
+                            <p class="help-block" ng-show="(feedbackForm.comment.$dirty && feedbackForm.comment.$invalid)">
+                                <span class="error-message" ng-show="feedbackForm.comment.$error.required">
+                                    Required
+                                </span>
+                            </p>
+                        </div>
+
+                        <hr>
+
+                        <div class="form-actions" ng-hide="feedbackReadonly">
+                            <button type="submit" ng-disabled="feedbackSubmitting" class="btn btn-large btn-primary">
+                                {{ 'grab_completed_submit' | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

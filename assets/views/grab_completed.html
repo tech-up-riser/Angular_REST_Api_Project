@@ -1,0 +1,126 @@
+<div class="container-fluid container-fullw bg-white" ng-controller="GrabCompletedCtrl">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel panel-white text-center" id="panel1">
+                <div class="panel-heading">
+                    <h4 class="panel-title">{{ 'grab_completed_completed_title' | translate }}</h4>
+                </div>
+                <div class="panel-body">
+                    <p>{{'grab_completed_completed_description' | translate}}</p>
+                    <p>{{'grab_completed_pricePickup' | translate}}</p>
+                    <h2>{{Bid.finalAmount}}<sup>$</sup></h2>
+                </div>
+                <div class="panel-footer">
+                    <p>
+                        <button class="btn btn-large btn-primary"
+                                ng-if="Grab.status == 'scheduled'"
+                                ng-disabled="!(PaymentInfo.ID && Bid.ID)"
+                                ng-click="completeGrab()">
+                            {{'grab_completed_confirm' | translate}}
+                        </button>
+                        <button ng-if="Grab.status == 'completed'" class="btn btn-large btn-primary">
+                            Completed <i class="glyphicon glyphicon-ok"></i>
+                        </button>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 margin-bottom-10">
+            <h3>
+                {{'grab_completed_review' | translate}}
+            </h3>
+        </div>
+        <div class="col-md-12">
+            <div class="row">
+                <form name="feedbackForm" ng-submit="submitFeedbackForm($event)" novalidate>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>
+                                        {{'grab_completed_onTime' | translate}}
+                                    </label>
+                                    <div class="margin-bottom-15 text-extra-large">
+                                        <uib-rating max="feedbackMax"
+                                                    ng-model="Feedback.onTime"
+                                                    readonly="feedbackReadonly"
+                                                    aria-labelledby="default-rating"></uib-rating>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>
+                                        {{ 'grab_completed_curteous' | translate }}
+                                    </label>
+                                    <div class="margin-bottom-15 text-extra-large">
+                                        <uib-rating max="feedbackMax"
+                                                    ng-model="Feedback.curteous"
+                                                    readonly="feedbackReadonly"
+                                                    aria-labelledby="default-rating"></uib-rating>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>
+                                        {{ 'grab_completed_useful' | translate }}
+                                    </label>
+                                    <div class="margin-bottom-15 text-extra-large">
+                                        <uib-rating max="feedbackMax"
+                                                    ng-model="Feedback.useful"
+                                                    readonly="feedbackReadonly"
+                                                    aria-labelledby="default-rating"></uib-rating>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>
+                                        {{ 'grab_completed_cleanliness' | translate }}
+                                    </label>
+                                    <div class="margin-bottom-15 text-extra-large">
+                                        <uib-rating max="feedbackMax"
+                                                    ng-model="Feedback.cleanliness"
+                                                    readonly="feedbackReadonly"
+                                                    aria-labelledby="default-rating"></uib-rating>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group" ng-class="{'has-error': (feedbackForm.comment.$dirty && feedbackForm.comment.$invalid)}">
+                            <label class="control-label" for="comment">
+                                {{ 'grab_completed_comments' | translate }}
+                            </label>
+                            <textarea id="comment"
+                                      name="comment"
+                                      ng-model="Feedback.comment"
+                                      ng-readonly="feedbackReadonly"
+                                      required
+                                      class="form-control autosize area-animated msd-elastic: \n; ng-valid ng-dirty ng-valid-parse ng-touched"
+                                      style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 134px;">
+                            </textarea>
+
+                            <p class="help-block" ng-show="(feedbackForm.comment.$dirty && feedbackForm.comment.$invalid)">
+                                <span class="error-message" ng-show="feedbackForm.comment.$error.required">
+                                    Required
+                                </span>
+                            </p>
+                        </div>
+
+                        <hr>
+
+                        <div class="form-actions" ng-hide="feedbackReadonly">
+                            <button type="submit" ng-disabled="feedbackSubmitting" class="btn btn-large btn-primary">
+                                {{ 'grab_completed_submit' | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

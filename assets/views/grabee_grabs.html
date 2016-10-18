@@ -1,0 +1,207 @@
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">Grabs</h1>
+            <span class="mainDescription" translate="grabee_grabs_title">
+                List of my Grabs that I've posted
+            </span>
+        </div>
+    </div>
+</section>
+
+<div class="container-fluid container-fullw bg-white" ng-controller="GrabeeGrabsCtrl">
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label class="block">
+                {{'grabee_grabs_type' | translate}}
+            </label>
+            <div class="btn-group">
+                <span class="btn" ng-class="{'btn-primary ': Filter.type == null, 'btn-default': Filter.type !== null}"
+                      ng-click="Filter.type = null;">
+                    {{'grabee_grabs_all' | translate}}
+                </span>
+                <span class="btn"
+                      ng-class="{'btn-primary ': Filter.type == 'grab', 'btn-default': Filter.type !== 'grab'}"
+                      ng-click="Filter.type = 'grab';">
+                    {{'grabee_dashboard_grabit' | translate}}
+                </span>
+                <span class="btn"
+                      ng-class="{'btn-primary ': Filter.type == 'container', 'btn-default': Filter.type !== 'container'}"
+                      ng-click="Filter.type = 'container';">
+                    {{'grabee_grabs_container' | translate}}
+                </span>
+                <span class="btn"
+                      ng-class="{'btn-primary ': Filter.type == 'pickup', 'btn-default': Filter.type !== 'pickup'}"
+                      ng-click="Filter.type = 'pickup';">
+                    {{'grabee_dashboard_missedPickup' | translate}}
+                </span>
+            </div>
+        </div>
+        <div class="col-md-12 form-group">
+            <label class="block">
+               {{'grabee_grabs_status' | translate}}
+            </label>
+            <div class="btn-group">
+                <span class="btn"
+                      ng-class="{'btn-primary ': Filter.status == null, 'btn-default': Filter.status !== null}"
+                      ng-click="Filter.status = null;">
+                    {{'grabee_grabs_all' | translate}}
+                </span>
+                <span class="btn"
+                      ng-class="{'btn-primary ': Filter.status == 'draft', 'btn-default': Filter.status !== 'draft'}"
+                      ng-click="Filter.status = 'draft';">
+                    {{'grabee_grabs_draft' | translate}}
+                </span>
+                <span class="btn"
+                      ng-class="{'btn-primary ': Filter.status == 'published', 'btn-default': Filter.status !== 'published'}"
+                      ng-click="Filter.status = 'published';">
+                    {{'grabee_grabs_published' | translate}}
+                </span>
+                <span class="btn"
+                      ng-class="{'btn-primary ': Filter.status == 'scheduled', 'btn-default': Filter.status !== 'scheduled'}"
+                      ng-click="Filter.status = 'scheduled';">
+                    {{'grabee_grabs_scheduled' | translate}}
+                </span>
+                <span class="btn"
+                      ng-class="{'btn-primary ': Filter.status == 'delivered', 'btn-default': Filter.status !== 'delivered'}"
+                      ng-click="Filter.status = 'delivered';">
+                    {{'grabee_dashboard_status_collected' | translate}}
+                </span>
+                <span class="btn"
+                      ng-class="{'btn-primary ': Filter.status == 'complete', 'btn-default': Filter.status !== 'complete'}"
+                      ng-click="Filter.status = 'complete';">
+                    {{'grabee_grabs_completed' | translate}}
+                </span>
+                <span class="btn"
+                      ng-class="{'btn-primary ': Filter.status == 'cancelled', 'btn-default': Filter.status !== 'cancelled'}"
+                      ng-click="Filter.status = 'cancelled';">
+                    {{'grabee_grabs_cancelled' | translate}}
+                </span>
+            </div>
+        </div>
+        {{'pagination_previous' | translate}}
+        <div class="col-md-12" ng-if="Grabs.length">
+            <uib-pagination total-items="Pages * itemsPerPage"
+                            items-per-page="itemsPerPage"
+                            max-size="10"
+                            next-text="{{'pagination_next' | translate}}"
+                            previous-text="{{'pagination_previous' | translate}}"
+                            ng-model="Filter.page"></uib-pagination>
+        </div>
+        <div class="col-md-12" ng-if="Grabs.length">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="list-group">
+                        <div class="list-group-item col-md-12 col-sm-12 col-xs-12" ng-repeat="Grab in Grabs">
+                            <div class="col-sm-6 no-padding" ng-if="Grab.media">
+                                <a ng-if="(Grab.status == 'published') || (Grab.status == 'draft')" ui-sref="app.grab.published({grabId: Grab.ID})">
+                                    <img style="width:100%;margin-bottom:20px;" ng-src="{{Grab.media.image}}" alt="">
+                                </a>
+                                <a ng-if="Grab.status == 'scheduled'" ui-sref="app.grab.scheduled({grabId: Grab.ID})">
+                                    <img style="width:100%;margin-bottom:20px;" ng-src="{{Grab.media.image}}" alt="">
+                                </a>
+                                <a ng-if="Grab.status == 'complete'" ui-sref="app.grab.complete({grabId: Grab.ID})">
+                                    <img style="width:100%;margin-bottom:20px;" ng-src="{{Grab.media.image}}" alt="">
+                                </a>
+                            </div>
+                            <div ng-class="{'col-sm-6': Grab.media, 'col-sm-12': !Grab.media}">
+                                <div class="row">
+                                    <h3 class="col-xs-8" ng-if="Grab.title">
+                                        <a ng-if="(Grab.status == 'published') || (Grab.status == 'draft')" ui-sref="app.grab.published({grabId: Grab.ID})">
+                                            {{Grab.title}}
+                                        </a>
+                                        <a ng-if="Grab.status == 'scheduled'" ui-sref="app.grab.scheduled({grabId: Grab.ID})">
+                                            {{Grab.title}}
+                                        </a>
+                                        <a ng-if="Grab.status == 'complete'" ui-sref="app.grab.complete({grabId: Grab.ID})">
+                                            {{Grab.title}}
+                                        </a>
+                                    </h3>
+                                    <h3 class="col-xs-4 pull-right text-right">
+                                        {{Grab.bids.length}} {{'grabee_grabs_bids' | translate}}
+                                    </h3>
+                                </div>
+                                <p>
+                                    {{Grab.grabtype ? ('grabee_grabs_'+Grab.grabtype | translate) : ''}} {{Grab.condition ? ('grabee_grabs_'+Grab.condition | translate) : ''}}
+                                </p>
+                                <p>
+                                    <span class="badge">
+                                        <span ng-if="Grab.type == 'grab'"><i class="fa fa-truck"></i> Grab</span>
+                                        <span ng-if="Grab.type == 'container'"><i
+                                                class="fa fa-inbox"></i> Container</span>
+                                        <span ng-if="Grab.type == 'pickup'"><i class="fa fa-trash"></i> Pick up</span>
+                                    </span>
+                                    <span class="badge" ng-repeat="GrabSchedule in lodash.uniqBy(Grab.schedules, 'date')">
+                                        <span ng-if="(moment.utc().format('YYYY-MM-DD') == moment.utc(GrabSchedule.date).format('YYYY-MM-DD')) && (HumanizeTime(moment()) == GrabSchedule.time)">
+                                            Right away
+                                        </span>
+                                        <span ng-if="!((moment.utc().format('YYYY-MM-DD') == moment.utc(GrabSchedule.date).format('YYYY-MM-DD')) && (HumanizeTime(moment()) == GrabSchedule.time))">
+                                            {{moment.utc(GrabSchedule.date).format('YYYY-MM-DD')}}
+                                        </span>
+                                    </span>
+                                </p>
+                                <p>
+                                    <a ng-if="Grab.status == 'published'"
+                                       ui-sref="app.grab.published({grabId: Grab.ID})" class="btn btn-primary">
+                                        <span translate="grabee_grabs_view">
+                                            View
+                                        </span>
+                                    </a>
+                                    <a ng-if="Grab.status == 'scheduled' && !grabHasCompletedBid(Grab)"
+                                       ui-sref="app.grab.scheduled({grabId: Grab.ID})" class="btn btn-primary">
+                                        <span translate="grabee_grabs_view">
+                                            View
+                                        </span>
+                                    </a>
+                                    <a ng-if="grabHasCompletedBid(Grab)" ui-sref="app.grab.completed({grabId: Grab.ID})"
+                                       class="btn btn-primary">
+                                        <span translate="grabee_grabs_view">
+                                            View
+                                        </span>
+                                    </a>
+                                    <a ng-if="Grab.type == 'grab' && Grab.status == 'draft'"
+                                       ui-sref="app.grab.update_grab({grabId: Grab.ID})"
+                                       class="btn btn-o btn-primary">
+                                        <i class="fa fa-pencil"></i>
+                                        <span translate="grabee_grabs_edit">
+                                            Edit
+                                        </span>
+                                    </a>
+                                    <a ng-if="Grab.type == 'container' && Grab.status == 'draft'"
+                                       ui-sref="app.grab.update_container({grabId: Grab.ID})"
+                                       class="btn btn-o btn-primary">
+                                        <i class="fa fa-pencil"></i>
+                                        <span translate="grabee_grabs_edit">
+                                            Edit
+                                        </span>
+                                    </a>
+                                    <a ng-if="Grab.type == 'pickup' && Grab.status == 'draft'"
+                                       ui-sref="app.grab.update_pickup({grabId: Grab.ID})"
+                                       class="btn btn-o btn-primary">
+                                        <i class="fa fa-pencil"></i>
+                                        <span translate="grabee_grabs_edit">
+                                            Edit
+                                        </span>
+                                    </a>
+                                    <a href ng-if="Grab.status != 'cancelled'"
+                                        class="btn btn-o btn-danger" ng-click="cancelGrub(Grab)">
+                                        <i class="fa fa-times"></i>
+                                        <span translate="grabee_grabs_cancel">
+                                            Cancel
+                                        </span>
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12" ng-if="Grabs.length">
+            <uib-pagination total-items="Pages * itemsPerPage"
+                            items-per-page="itemsPerPage"
+                            max-size="10"
+                            ng-model="Filter.page"></uib-pagination>
+        </div>
+    </div>
+</div>

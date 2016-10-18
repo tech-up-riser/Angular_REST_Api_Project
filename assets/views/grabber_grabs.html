@@ -1,0 +1,229 @@
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">GRABS</h1>
+        </div>
+    </div>
+</section>
+<div class="container-fluid container-fullw bg-white" ng-controller="GrabberGrabsCtrl">
+    <div class="panel panel-transparent">
+        <div class="row">
+            <div class="col-md-3 col-sm-6">
+                <div class="form-group">
+                    <select class="form-control" ng-model="Filter.serviceArea">
+                        <option value="">{{ 'all_service_areas' | translate }}</option>
+                        <option value="">Snowdon</option>
+                        <option value="">Blainville</option>
+                        <option value="">Boucher–Les Patriotes–Verchères</option>
+                        <option value="">Centre-du-Bas-Saint-Laurent</option>
+                        <option value="">Chicoutimi</option>
+                        <option value="">Longueuil</option>
+                        <option value="">Mont-Royal</option>
+                        <option value="">Sainte-Rose</option>
+                        <option value="">Soulanges–Vaudreuil</option>
+                        <option value="">Ville-Marie</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <div class="form-group">
+                    <select class="form-control"
+                            ng-options="type.value as type.label_fr for type in GrabData.grab.types track by type.value"
+                            ng-model="Filter.type">
+                        <option value="">
+                            {{ 'all_types' | translate}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <div class="form-group">
+                    <select ng-options="category as category[langMapping[currentLang]] for category in GrabCategories track by category.value"
+                            ng-model="Filter.category"
+                            class="form-control">
+                        <option value=''>
+                            {{ 'all_categories' | translate}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <div class="form-group">
+                    <div class="form-group">
+                        <span ng-hide="GrabSubCategories.length">
+                            <select class="form-control" ng-model="disabled">
+                                <option value="" disabled>
+                                    {{ 'all_subcategories' | translate }}
+                                </option>
+                            </select>
+                        </span>
+
+                        <span ng-show="GrabSubCategories.length">
+                            <select ng-options="subCategory as subCategory[langMapping[currentLang]] for subCategory in GrabSubCategories track by subCategory.value"
+                                    ng-model="Filter.subCategory"
+                                    class="form-control">
+                                <option value="">
+                                    {{ 'all_subcategories' | translate }}
+                                </option>
+                            </select>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="clip-radio radio-primary">
+                    <input type="radio" id="right-away" name="time-period" ng-value="Periods.rightAway" ng-model="selectedPeriod">
+                    <label for="right-away">
+                        {{ 'grabber_grabs_rightAway' | translate }}
+                    </label>
+                    <input type="radio" id="next7" name="time-period" ng-value="Periods.week" ng-model="selectedPeriod">
+                    <label for="next7">
+                        {{ 'grabber_grabs_next7' | translate }}
+                    </label>
+                    <input type="radio" id="next14" name="time-period" ng-value="Periods.twoWeeks" ng-model="selectedPeriod">
+                    <label for="next14">
+                        {{ 'grabber_grabs_next14' | translate }}
+                    </label>
+                    <input type="radio" id="anytime" name="time-period" ng-value="Periods.anytime" ng-model="selectedPeriod">
+                    <label for="anytime">
+                        {{ 'grabber_grabs_anytime' | translate }}
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="form-group">
+                    <ui-gmap-google-map center="map.center"
+                                        zoom="map.zoom"
+                                        control='map.control'
+                                        options="map.options">
+
+                        <ui-gmap-markers models="markers"
+                                         coords="'coords'"
+                                         type="'cluster'"
+                                         fit="true"
+                                         click="markerClick"
+                                         typeOptions='{"imagePath":"img/map-ico","printable":true}'>
+                        </ui-gmap-markers>
+
+                        <ui-gmap-window
+                                ng-cloak
+                                coords='gmapWindow.coords'
+                                show='gmapWindow.show'
+                                templateUrl="'./assets/views/partials/gmap-window-grab.html'"
+                                templateParameter='gmapWindow.templateParameter'
+                                isIconVisibleOnClick='gmapWindow.isIconVisibleOnClick'
+                                closeClick='gmapWindow.closeClick()'>
+                        </ui-gmap-window>
+                    </ui-gmap-google-map>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" ng-if="Grabs.length">
+                <div class="panel panel-white">
+                    <div class="panel-heading border-light">
+                        <h5 class="over-title">{{Count}} GRABS <span class="text-bold">{{ 'grab_published_available' | translate }}</span></h5>
+                        <ul class="panel-heading-tabs border-light">
+                            <li>
+                                <div class="pull-right">
+                                    <div class="btn-group" uib-dropdown is-open="status.isopen">
+                                        <button type="button"
+                                                class="btn btn-primary dropdown-toggle"
+                                                uib-dropdown-toggle ng-disabled="disabled">
+                                            {{ 'grabber_grabs_sortBy' | translate }}
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li>
+                                                <a href="#" ng-click="Filter.sortBy = 'createdAt'">
+                                                    {{ 'date_published' | translate }}
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" ng-click="Filter.sortBy = 'bidsCount'">
+                                                    {{ 'number_of_bids' | translate }}
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" ng-click="Filter.sortBy = 'pickupDate'">
+                                                    {{ 'pickup_date' | translate }}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <!--<li class="panel-tools">-->
+                                <!--<ct-paneltool tool-refresh="load1"></ct-paneltool>-->
+                            <!--</li>-->
+                        </ul>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="list-group" style="margin-bottom: 0">
+                                <div class="list-group-item" ng-repeat="Grab in Grabs" ng-style="{'border': 'none', 'border-top': $index == 0 ? none: '1px solid #ddd'}">
+                                    <div class="row">
+                                        <div class="col-sm-6" ng-if="Grab.media">
+                                            <a ui-sref="app.grab.bid({grabId: Grab.ID})" style="display: block">
+                                                <img style="max-width:100%; margin-bottom:20px;" ng-src="{{Grab.media.image}}" alt="">
+                                            </a>
+                                        </div>
+                                        <div ng-class="{'col-sm-6': Grab.media, 'col-sm-12': !Grab.media}">
+                                            <div class="row">
+                                                <h3 class="col-xs-8">
+                                                    {{Grab.title}}
+                                                </h3>
+                                                <h3 class="col-xs-4 pull-right text-right">
+                                                    {{Grab.bids.length}} {{ 'grab_published_bids' | translate}}
+                                                </h3>
+                                            </div>
+                                            <p>
+                                                {{Grab.grabtype}} {{Grab.condition}}
+                                            </p>
+                                            <p>
+                                                <span class="badge">
+                                                    <span ng-if="Grab.type == 'grab'"><i class="fa fa-truck"></i> Grab</span>
+                                                    <span ng-if="Grab.type == 'container'"><i class="fa fa-inbox"></i> Container</span>
+                                                    <span ng-if="Grab.type == 'pickup'"><i class="fa fa-trash"></i> Pick up</span>
+                                                </span>
+                                                <span class="badge" ng-repeat="GrabSchedule in lodash.uniqBy(Grab.schedules, 'date')">
+                                                    <span ng-if="(moment.utc().format('YYYY-MM-DD') == moment.utc(GrabSchedule.date).format('YYYY-MM-DD')) && (HumanizeTime(moment()) == GrabSchedule.time)">
+                                                        Right away
+                                                    </span>
+                                                    <span ng-if="!((moment.utc().format('YYYY-MM-DD') == moment.utc(GrabSchedule.date).format('YYYY-MM-DD')) && (HumanizeTime(moment()) == GrabSchedule.time))">
+                                                        {{moment.utc(GrabSchedule.date).format('YYYY-MM-DD')}}
+                                                    </span>
+                                                </span>
+                                            </p>
+                                            <p>
+                                                <a ui-sref="app.grab.bid({grabId: Grab.ID})" class="btn btn-primary">
+                                                    {{ 'grabber_grabs_seeMore' | translate }}
+                                                </a>
+                                                <!-- <a ui-sref="app.grab.bid({grabId: Grab.ID})" class="btn btn-o btn-primary">
+                                                    {{ 'grabber_grabs_placeBid' | translate }}
+                                                </a> -->
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" ng-if="Grabs.length">
+                <uib-pagination total-items="Pages * itemsPerPage" items-per-page="itemsPerPage" max-size="10" ng-model="Filter.page"></uib-pagination>
+            </div>
+        </div>
+    </div>
+</div>

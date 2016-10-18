@@ -1,0 +1,70 @@
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle" translate="sidebar.nav.pages.USERPROFILE">USER PROFILE</h1>
+        </div>
+    </div>
+</section>
+
+<div class="container-fluid container-fullw bg-white" ng-controller="SettingsBillingCtrl">
+    <div class="row">
+        <div class="col-md-12" ng-include="'./assets/views/partials/profile-menu.html'"></div>
+
+        <div class="col-md-12">
+            <div class="bid" ng-repeat="Bid in Bids">
+                <div class="col-xs-12 col-sm-12 no-padding">
+                    <div class="col-sm-4 col-xs-12" ng-if="user.user.role == 'grabee'">
+                        <img class="fa-round"
+                             width="100%"
+                             style="padding:0px;max-height:30px;max-width:30px;float:left;margin-right:10px;"
+                             ng-src="{{user.user.client.thumbnail}}"
+                             src="./assets/images/default-user.png"
+                             alt="">
+                        <h4 style="padding:0px;float:left;margin-top:7px;">
+                            {{user.user.client.fullName}}
+                        </h4>
+                    </div>
+                    <div class="col-sm-4 col-xs-12" ng-if="user.user.role == 'grabber'">
+                        <img class="fa-round"
+                             width="100%"
+                             style="padding:0px;max-height:30px;max-width:30px;float:left;margin-right:10px;"
+                             ng-src="{{Bid.grab.user.client.thumbnail}}"
+                             src="./assets/images/default-user.png"
+                             alt="">
+                        <h4 style="padding:0px;float:left;margin-top:7px;">
+                            {{Bid.grab.user.client.fullName}}
+                        </h4>
+                    </div>
+                    <div class="col-sm-6 col-xs-12">
+                        <img style="width:75px;float:left;margin-right:20px;"
+                             ng-src="{{Bid.grab.media.image}}"
+                             alt="">
+					<span class="pull-left">
+						<p class="text-large">
+                            <a ui-sref="app.grab.completed({grabId: Bid.grab.ID})">
+                                {{Bid.grab.title}}
+                            </a>
+                        </p>
+						<ul class="list-unstyled">
+                            <li ng-repeat="BidSchedule in Bid.schedules" style="margin-bottom: 5px">
+                                {{moment(BidSchedule.date).format("dddd, MMM Do")}}<br>
+                                <small>{{BidSchedule.time}}</small>
+                            </li>
+                        </ul>
+					</span>
+                    </div>
+                    <p class="col-sm-1 col-xs-4 text-large no-padding">
+                        {{Bid.finalAmount}}$
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12" ng-if="Bids.length">
+            <uib-pagination total-items="Pages * itemsPerPage"
+                            items-per-page="itemsPerPage"
+                            max-size="10"
+                            ng-model="Filter.page"></uib-pagination>
+        </div>
+    </div>
+</div>

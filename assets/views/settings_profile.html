@@ -1,0 +1,570 @@
+<script id="searchbox.tpl.html" type="text/ng-template">
+    <input type="text" class="google-autocomplete-searchbox" placeholder="{{ 'login_registration_type_your_address' | translate }}">
+</script>
+
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle" translate="sidebar.nav.pages.USERPROFILE">
+                {{ 'user_profile' | translate }}
+            </h1>
+        </div>
+    </div>
+</section>
+
+<div class="container-fluid container-fullw bg-white" ng-controller="SettingsProfileCtrl">
+    <div class="row">
+        <div class="col-md-12" ng-include="'./assets/views/partials/profile-menu.html'"></div>
+        <div class="col-md-12">
+            <form name="grabeeProfileForm" ng-submit="submitGrabeeProfileForm($event)" novalidate>
+                <fieldset>
+                    <legend>
+                        {{ 'profile_info' | translate }}
+                    </legend>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group"
+                                 ng-class="{'has-error': (updateGrabForm.file.$dirty && updateGrabForm.file.$invalid)}">
+                                <label>
+                                    {{ 'grab_create_grab_imageUpload' | translate }} *
+                                </label>
+
+                                <div>
+                                    <div class="user-image">
+                                        <div class="thumbnail margin-bottom-5">
+                                            <span ng-if="user.user.client.thumbnail">
+                                                <div class="user-picture" style="background-image: url({{user.user.client.thumbnail}});" class="thumb">
+                                                </div>
+                                            </span>
+                                            <span ng-if="!user.user.client.thumbnail || (user.user.client.thumbnail == '')">
+                                                <div class="user-picture" class="thumb"></div>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="user-image-buttons-edit">
+                                    <span class="btn btn-danger" ng-click="imageFile = null" ng-show="imageFile">
+                                        <i class="fa fa-times"></i>
+                                    </span>
+                                    <span class="grab-file-upload btn btn-primary">
+                                        <i class="fa fa-camera"></i>
+
+                                        <input type="file"
+                                               ngf-select
+                                               ng-model="imageFile"
+                                               name="file"
+                                               accept="image/*"
+                                               ngf-max-size="2MB"
+                                               ngf-model-invalid="errorFile">
+                                    </span>
+                                </div>
+
+                                <p class="help-block"
+                                   ng-show="updateGrabForm.file.$dirty && updateGrabForm.file.$invalid">
+                                  <span class="error-message" ng-show="updateGrabForm.file.$error.maxSize">
+                                    {{ 'file_too_large' | translate }} {{errorFile.size / 1000000|number:1}}MB: max 10M
+                                  </span>
+                                </p>
+                            </div>
+                            <div class="form-group"
+                                 ng-class="{'has-error': (grabeeProfileForm.fullName.$dirty && grabeeProfileForm.fullName.$invalid)}">
+                                <label class="control-label" for="fullName">
+                                    {{ 'login_registration_fullName' | translate }}
+                                </label>
+                                <input type="text" class="form-control" id="fullName" name="fullName"
+                                       ng-model="Client.fullName" required placeholder="{{ 'login_registration_fullName' | translate }}">
+
+                                <p class="help-block"
+                                   ng-show="(grabeeProfileForm.fullName.$dirty && grabeeProfileForm.fullName.$invalid)">
+                                    <span class="error-message" ng-show="grabeeProfileForm.fullName.$error.required">
+                                        {{ 'login_login_required' | translate }}
+                                    </span>
+                                </p>
+                            </div>
+
+                            <div class="form-group">
+                                <ui-gmap-google-map center="map.center"
+                                                    zoom="map.zoom"
+                                                    control='map.control'
+                                                    options="map.options">
+
+                                    <ui-gmap-search-box template="searchBox.template"
+                                                        events="searchBox.events"
+                                                        options="searchBox.options"
+                                                        position="'top-center'"></ui-gmap-search-box>
+
+                                    <ui-gmap-marker ng-if="marker.coords.latitude && marker.coords.longitude"
+                                                    coords="marker.coords"
+                                                    idkey="marker.id"></ui-gmap-marker>
+                                </ui-gmap-google-map>
+                            </div>
+                            <div class="alert alert-danger" ng-hide="(Client.zipcode.indexOf('J5R') > -1) || (user.user.role == 'grabber')" aria-hidden="false" style="">
+                                {{ 'profile_location_warning' | translate }}
+                            </div>
+                            <div class="form-group"
+                                 ng-class="{'has-error': (grabeeProfileForm.address.$dirty && grabeeProfileForm.address.$invalid)}">
+                                <label class="control-label" for="address">
+                                    {{ 'login_registration_address' | translate }}
+                                </label>
+                                <input type="text" class="form-control" id="address" name="address"
+                                       ng-model="Client.address" ng-readonly="true" required placeholder="{{ 'login_registration_address' | translate }}">
+
+                                <p class="help-block"
+                                   ng-show="(grabeeProfileForm.address.$dirty && grabeeProfileForm.address.$invalid)">
+                                    <span class="error-message" ng-show="grabeeProfileForm.address.$error.required">
+                                        {{ 'login_login_required' | translate }}
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group"
+                                         ng-class="{'has-error': (grabeeProfileForm.zipcode.$dirty && grabeeProfileForm.zipcode.$invalid || Client.zipcode.indexOf('J5R') < 0 && user.user.role == 'grabee')}">
+                                        <label class="control-label" for="zipcode">
+                                            {{ 'postal_code' | translate }}
+                                        </label>
+                                        <input type="text" class="form-control" id="zipcode" name="zipcode"
+                                               ng-model="Client.zipcode" placeholder="{{ 'postal_code' | translate }}" required>
+
+                                        <p class="help-block"
+                                           ng-show="(grabeeProfileForm.zipcode.$dirty && grabeeProfileForm.zipcode.$invalid || Client.zipcode.indexOf('J5R') < 0)">
+                                            <span class="error-message"
+                                                  ng-show="grabeeProfileForm.zipcode.$error.required">
+                                                {{ 'login_login_required' | translate }}
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-group"
+                                         ng-class="{'has-error': (grabeeProfileForm.city.$dirty && grabeeProfileForm.city.$invalid)}">
+                                        <label class="control-label" for="city">
+                                            {{ 'grab_published_city' | translate }}
+                                        </label>
+                                        <input type="text" class="form-control" id="city" name="city"
+                                               ng-model="Client.city" ng-readonly="true" required placeholder="{{ 'grab_published_city' | translate }}">
+
+                                        <p class="help-block"
+                                           ng-show="(grabeeProfileForm.city.$dirty && grabeeProfileForm.city.$invalid)">
+                                            <span class="error-message"
+                                                  ng-show="grabeeProfileForm.city.$error.required">
+                                                {{ 'login_login_required' | translate }}
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group"
+                                 ng-class="{'has-error': (grabeeProfileForm.region.$dirty && grabeeProfileForm.region.$invalid)}">
+                                <label class="control-label" for="region">
+                                    {{ 'login_registration_state' | translate }}
+                                </label>
+                                <input type="text" class="form-control" id="region" name="region"
+                                       ng-model="Client.region" ng-readonly="true" required placeholder="{{ 'login_registration_region' | translate }}">
+
+                                <p class="help-block"
+                                   ng-show="(grabeeProfileForm.region.$dirty && grabeeProfileForm.region.$invalid)">
+                                    <span class="error-message" ng-show="grabeeProfileForm.region.$error.required">
+                                        {{ 'login_login_required' | translate }}
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="form-group"
+                                 ng-class="{'has-error': (grabeeProfileForm.country.$dirty && grabeeProfileForm.country.$invalid)}">
+                                <label class="control-label" for="country">
+                                    {{ 'login_registration_Country' | translate }}
+                                </label>
+                                <input type="text" class="form-control" id="country" name="country"
+                                       ng-model="Client.country" required ng-readonly="true" placeholder="{{ 'login_registration_Country' | translate }}">
+
+                                <p class="help-block"
+                                   ng-show="(grabeeProfileForm.country.$dirty && grabeeProfileForm.country.$invalid)">
+                                    <span class="error-message" ng-show="grabeeProfileForm.country.$error.required">
+                                        {{ 'login_login_required' | translate }}
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="form-group"
+                                 ng-class="{'has-error': (grabeeProfileForm.phone.$dirty && grabeeProfileForm.phone.$invalid)}">
+                                <label class="control-label" for="phone">
+                                    {{ 'phone_number' | translate }}
+                                </label>
+                                <input phone-formatter type="text" class="form-control" id="phone" name="phone" ng-model="Client.phone"
+                                        placeholder="(XXX) XXX-XXXX" required>
+
+                                <p class="help-block"
+                                   ng-show="(grabeeProfileForm.phone.$dirty && grabeeProfileForm.phone.$invalid)">
+                                    <span class="error-message" ng-show="grabeeProfileForm.phone.$error.required">
+                                        {{ 'login_login_required' | translate }}
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="form-actions" ng-hide="(Client.zipcode.indexOf('J5R') < 0) && (user.user.role == 'grabee')">
+                                <button type="submit"
+                                        ladda="grabeeProfileSubmitting"
+                                        class="btn btn-primary btn-wide pull-left">
+                                    {{ 'grab_create_grab_actions_save' | translate }} <i class="fa fa-arrow-circle-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <div class="col-md-12">
+            <form name="grabeeUpdateAdditionalAddressForm" novalidate>
+                <div class="row">
+                    <div class="col-md-12" ng-repeat="ExistingClientAddress in ExistingClientAddresses">
+                        <ng-form name="{{'addressForm_' + $index}}">
+                            <fieldset>
+                                <legend>
+                                    {{ 'login_registration_address' | translate }} {{$index + 2}}
+                                </legend>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group"
+                                             ng-class="{'has-error': (this['addressForm_' + $index].name.$dirty && this['addressForm_' + $index].name.$invalid)}">
+                                            <label class="control-label" for="{{'name' + $index}}">
+                                                Name
+                                            </label>
+                                            <input type="text" class="form-control" id="{{'name' + $index}}" name="name"
+                                                   ng-model="ExistingClientAddress.name" required
+                                                   placeholder="Additional address name">
+
+                                            <p class="help-block"
+                                               ng-show="(this['addressForm_' + $index].name.$dirty && this['addressForm_' + $index].name.$invalid)">
+                                                <span class="error-message"
+                                                      ng-show="this['addressForm_' + $index].name.$error.required">
+                                                    {{ 'login_login_required' | translate }}
+                                                </span>
+                                            </p>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <ui-gmap-google-map
+                                                    center="ExistingClientAddressesMapConfs[$index].map.center"
+                                                    zoom="ExistingClientAddressesMapConfs[$index].map.zoom"
+                                                    control='ExistingClientAddressesMapConfs[$index].map.control'
+                                                    options="ExistingClientAddressesMapConfs[$index].map.options">
+
+                                                <ui-gmap-search-box
+                                                        template="ExistingClientAddressesMapConfs[$index].searchBox.template"
+                                                        events="ExistingClientAddressesMapConfs[$index].searchBox.events"
+                                                        options="ExistingClientAddressesMapConfs[$index].searchBox.options"
+                                                        position="'top-center'"></ui-gmap-search-box>
+
+                                                <ui-gmap-marker
+                                                        ng-if="ExistingClientAddressesMapConfs[$index].marker.coords.latitude && ExistingClientAddressesMapConfs[$index].marker.coords.longitude"
+                                                        coords="ExistingClientAddressesMapConfs[$index].marker.coords"
+                                                        idkey="ExistingClientAddressesMapConfs[$index].marker.id"></ui-gmap-marker>
+                                            </ui-gmap-google-map>
+                                        </div>
+
+                                        <div class="form-group"
+                                             ng-class="{'has-error': (this['addressForm_' + $index].address.$dirty && this['addressForm_' + $index].address.$invalid)}">
+                                            <label class="control-label" for="{{'address' + $index}}">
+                                                {{ 'login_registration_address' | translate }}
+                                            </label>
+                                            <input type="text" class="form-control" id="{{'address' + $index}}"
+                                                   name="address" ng-model="ExistingClientAddress.address"
+                                                   ng-readonly="true" required placeholder="Address">
+
+                                            <p class="help-block"
+                                               ng-show="(this['addressForm_' + $index].address.$dirty && this['addressForm_' + $index].address.$invalid)">
+                                                <span class="error-message"
+                                                      ng-show="this['addressForm_' + $index].address.$error.required">
+                                                    {{ 'login_login_required' | translate }}
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group"
+                                                     ng-class="{'has-error': (this['addressForm_' + $index].zipcode.$dirty && this['addressForm_' + $index].zipcode.$invalid)}">
+                                                    <label class="control-label" for="{{'zipcode' + $index}}">
+                                                        {{ 'postal_code' | translate }}
+                                                    </label>
+                                                    <input type="text" class="form-control" id="{{'zipcode' + $index}}"
+                                                           name="zipcode" ng-model="ExistingClientAddress.zipcode"
+                                                           placeholder="{{ 'postal_code' | translate }}" required>
+
+                                                    <p class="help-block"
+                                                       ng-show="(this['addressForm_' + $index].zipcode.$dirty && this['addressForm_' + $index].zipcode.$invalid)">
+                                                      <span class="error-message"
+                                                            ng-show="this['addressForm_' + $index].zipcode.$error.required">
+                                                        {{ 'login_login_required' | translate }}
+                                                      </span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="form-group"
+                                                     ng-class="{'has-error': (this['addressForm_' + $index].city.$dirty && this['addressForm_' + $index].city.$invalid)}">
+                                                    <label class="control-label" for="{{'city' + $index}}">
+                                                        {{ 'grab_published_city' | translate }}
+                                                    </label>
+                                                    <input type="text" class="form-control" id="{{'city' + $index}}"
+                                                           name="city" ng-model="ExistingClientAddress.city"
+                                                           ng-readonly="true" required placeholder="{{ 'grab_published_city' | translate }}">
+
+                                                    <p class="help-block"
+                                                       ng-show="(this['addressForm_' + $index].city.$dirty && this['addressForm_' + $index].city.$invalid)">
+                                                        <span class="error-message"
+                                                              ng-show="this['addressForm_' + $index].city.$error.required">
+                                                            {{ 'login_login_required' | translate }}
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group"
+                                             ng-class="{'has-error': (this['addressForm_' + $index].region.$dirty && this['addressForm_' + $index].region.$invalid)}">
+                                            <label class="control-label" for="{{'region' + $index}}">
+                                                {{ 'login_registration_state' | translate }}
+                                            </label>
+                                            <input type="text" class="form-control" id="{{'region' + $index}}"
+                                                   name="region" ng-model="ExistingClientAddress.region"
+                                                   ng-readonly="true" required placeholder="Region">
+
+                                            <p class="help-block"
+                                               ng-show="(this['addressForm_' + $index].region.$dirty && this['addressForm_' + $index].region.$invalid)">
+                                                <span class="error-message"
+                                                      ng-show="this['addressForm_' + $index].region.$error.required">
+                                                    {{ 'login_login_required' | translate }}
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="form-group"
+                                             ng-class="{'has-error': (this['addressForm_' + $index].country.$dirty && this['addressForm_' + $index].country.$invalid)}">
+                                            <label class="control-label" for="{{'country_' + $index}}">
+                                                {{ 'login_registration_Country' | translate }}
+                                            </label>
+                                            <input type="text" class="form-control" id="{{'country' + $index}}"
+                                                   name="country" ng-model="ExistingClientAddress.country"
+                                                   ng-readonly="true" required placeholder="{{ 'login_registration_Country' | translate }}">
+
+                                            <p class="help-block"
+                                               ng-show="(this['addressForm_' + $index].country.$dirty && this['addressForm_' + $index].country.$invalid)">
+                                                <span class="error-message"
+                                                      ng-show="this['addressForm_' + $index].country.$error.required">
+                                                    {{ 'login_login_required' | translate }}
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="form-group"
+                                             ng-class="{'has-error': (this['addressForm_' + $index].phone.$dirty && this['addressForm_' + $index].phone.$invalid)}">
+                                            <label class="control-label" for="{{'phone' + $index}}">
+                                                {{ 'phone_number' | translate }}
+                                            </label>
+                                            <input type="text" class="form-control" id="{{'phone' + $index}}"
+                                                   name="phone" ng-model="ExistingClientAddress.phone" required
+                                                   placeholder="(XXX) XXX-XXXX">
+
+                                            <p class="help-block"
+                                               ng-show="(this['addressForm_' + $index].phone.$dirty && this['addressForm_' + $index].phone.$invalid)">
+                                                <span class="error-message"
+                                                      ng-show="this['addressForm_' + $index].phone.$error.required">
+                                                    {{ 'login_login_required' | translate }}
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="form-actions form-group">
+                                            <button type="submit"
+                                                    class="btn btn-primary btn-wide"
+                                                    ng-init="this['newClientAddressesSubmitting_' + $index] = false;"
+                                                    ng-disabled="this['newClientAddressesSubmitting_' + $index]"
+                                                    ng-click="updateGrabeeAdditionalAddress($index, $event)">
+                                                {{ 'grab_create_grab_actions_save' | translate }} <i class="fa fa-arrow-circle-right"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </ng-form>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-12">
+            <form name="grabeeAddAdditionalAddressForm" novalidate>
+                <div class="row">
+                    <div class="col-md-12" ng-repeat="NewClientAddress in NewClientAddresses">
+                        <ng-form name="{{'addressForm_' + $index}}">
+                            <fieldset>
+                                <legend>
+                                    {{ 'login_registration_address' | translate }} {{ExistingClientAddresses.length + $index + 2}}
+                                </legend>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group"
+                                             ng-class="{'has-error': (this['addressForm_' + $index].name.$dirty && this['addressForm_' + $index].name.$invalid)}">
+                                            <label class="control-label" for="{{'name_' + $index}}">
+                                                {{ 'login_registration_fullName' | translate }}
+                                            </label>
+                                            <input type="text" class="form-control" id="{{'name_' + $index}}"
+                                                   name="name" ng-model="NewClientAddress.name" required
+                                                   placeholder="{{ 'login_registration_fullName_place_holder' | translate }}">
+
+                                            <p class="help-block"
+                                               ng-show="(this['addressForm_' + $index].name.$dirty && this['addressForm_' + $index].name.$invalid)">
+                                                <span class="error-message"
+                                                      ng-show="this['addressForm_' + $index].name.$error.required">
+                                                    {{ 'login_login_required' | translate }}
+                                                </span>
+                                            </p>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <ui-gmap-google-map center="NewClientAddressesMapConfs[$index].map.center"
+                                                                zoom="NewClientAddressesMapConfs[$index].map.zoom"
+                                                                control='NewClientAddressesMapConfs[$index].map.control'
+                                                                options="NewClientAddressesMapConfs[$index].map.options">
+
+                                                <ui-gmap-search-box
+                                                        template="NewClientAddressesMapConfs[$index].searchBox.template"
+                                                        events="NewClientAddressesMapConfs[$index].searchBox.events"
+                                                        options="NewClientAddressesMapConfs[$index].searchBox.options"
+                                                        position="'top-center'"></ui-gmap-search-box>
+
+                                                <ui-gmap-marker
+                                                        ng-if="NewClientAddressesMapConfs[$index].marker.coords.latitude && NewClientAddressesMapConfs[$index].marker.coords.longitude"
+                                                        coords="NewClientAddressesMapConfs[$index].marker.coords"
+                                                        idkey="NewClientAddressesMapConfs[$index].marker.id"></ui-gmap-marker>
+                                            </ui-gmap-google-map>
+                                        </div>
+
+                                        <div class="form-group"
+                                             ng-class="{'has-error': (this['addressForm_' + $index].address.$dirty && this['addressForm_' + $index].address.$invalid)}">
+                                            <label class="control-label" for="{{'address_' + $index}}">
+                                                Address
+                                            </label>
+                                            <input type="text" class="form-control" id="{{'address_' + $index}}"
+                                                   name="address" ng-model="NewClientAddress.address" ng-readonly="true"
+                                                   required placeholder="Address">
+
+                                            <p class="help-block"
+                                               ng-show="(this['addressForm_' + $index].address.$dirty && this['addressForm_' + $index].address.$invalid)">
+                                                <span class="error-message"
+                                                      ng-show="this['addressForm_' + $index].address.$error.required">
+                                                    {{ 'login_login_required' | translate }}
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group"
+                                                     ng-class="{'has-error': (this['addressForm_' + $index].zipcode.$dirty && this['addressForm_' + $index].zipcode.$invalid)}">
+                                                    <label class="control-label" for="{{'zipcode_' + $index}}">
+                                                        {{ 'postal_code' | translate }}
+                                                    </label>
+                                                    <input type="text" class="form-control" id="{{'zipcode_' + $index}}"
+                                                           name="zipcode" ng-model="NewClientAddress.zipcode"
+                                                           placeholder="{{ 'postal_code' | translate }}" required>
+
+                                                    <p class="help-block"
+                                                       ng-show="(this['addressForm_' + $index].zipcode.$dirty && this['addressForm_' + $index].zipcode.$invalid)">
+                                                      <span class="error-message"
+                                                            ng-show="this['addressForm_' + $index].zipcode.$error.required">
+                                                        {{ 'login_login_required' | translate }}
+                                                      </span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="form-group"
+                                                     ng-class="{'has-error': (this['addressForm_' + $index].city.$dirty && this['addressForm_' + $index].city.$invalid)}">
+                                                    <label class="control-label" for="{{'city_' + $index}}">
+                                                        {{ 'grab_published_city' | translate }}
+                                                    </label>
+                                                    <input type="text" class="form-control" id="{{'city_' + $index}}"
+                                                           name="city" ng-model="NewClientAddress.city"
+                                                           ng-readonly="true" required placeholder="{{ 'grab_published_city' | translate }}">
+
+                                                    <p class="help-block"
+                                                       ng-show="(this['addressForm_' + $index].city.$dirty && this['addressForm_' + $index].city.$invalid)">
+                                                        <span class="error-message"
+                                                              ng-show="this['addressForm_' + $index].city.$error.required">
+                                                            {{ 'login_login_required' | translate }}
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group"
+                                             ng-class="{'has-error': (this['addressForm_' + $index].region.$dirty && this['addressForm_' + $index].region.$invalid)}">
+                                            <label class="control-label" for="{{'region_' + $index}}">
+                                                {{ 'login_registration_state' | translate }}
+                                            </label>
+                                            <input type="text" class="form-control" id="{{'region_' + $index}}"
+                                                   name="region" ng-model="NewClientAddress.region" ng-readonly="true"
+                                                   required placeholder="Region">
+
+                                            <p class="help-block"
+                                               ng-show="(this['addressForm_' + $index].region.$dirty && this['addressForm_' + $index].region.$invalid)">
+                                                <span class="error-message"
+                                                      ng-show="this['addressForm_' + $index].region.$error.required">
+                                                    {{ 'login_login_required' | translate }}
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="form-group"
+                                             ng-class="{'has-error': (this['addressForm_' + $index].country.$dirty && this['addressForm_' + $index].country.$invalid)}">
+                                            <label class="control-label" for="{{'country_' + $index}}">
+                                                {{ 'login_registration_Country' | translate }}
+                                            </label>
+                                            <input type="text" class="form-control" id="{{'country_' + $index}}"
+                                                   name="country" ng-model="NewClientAddress.country" ng-readonly="true"
+                                                   required placeholder="{{ 'login_registration_Country' | translate }}">
+
+                                            <p class="help-block"
+                                               ng-show="(this['addressForm_' + $index].country.$dirty && this['addressForm_' + $index].country.$invalid)">
+                                                <span class="error-message"
+                                                      ng-show="this['addressForm_' + $index].country.$error.required">
+                                                    {{ 'login_login_required' | translate }}
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="form-group"
+                                             ng-class="{'has-error': (this['addressForm_' + $index].phone.$dirty && this['addressForm_' + $index].phone.$invalid)}">
+                                            <label class="control-label" for="{{'phone_' + $index}}">
+                                                {{ 'phone_number' | translate }}
+                                            </label>
+                                            <input type="text" class="form-control" id="{{'phone_' + $index}}"
+                                                   name="phone" ng-model="NewClientAddress.phone" required
+                                                   placeholder="(XXX) XXX-XXXX">
+
+                                            <p class="help-block"
+                                               ng-show="(this['addressForm_' + $index].phone.$dirty && this['addressForm_' + $index].phone.$invalid)">
+                                                <span class="error-message"
+                                                      ng-show="this['addressForm_' + $index].phone.$error.required">
+                                                    {{ 'login_login_required' | translate }}
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="form-actions form-group">
+                                            <button type="submit"
+                                                    class="btn btn-primary btn-wide"
+                                                    ng-init="this['newClientAddressesSubmitting_' + $index] = false;"
+                                                    ng-disabled="this['newClientAddressesSubmitting_' + $index]"
+                                                    ng-click="addGrabeeAdditionalAddress($index, $event)">
+                                                {{ 'grab_create_grab_actions_save' | translate }} <i class="fa fa-arrow-circle-right"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </ng-form>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-12">
+            <div class="form-actions form-group">
+                <button type="submit" class="btn btn-primary btn-wide" ng-click="addAdditionalAddress()">
+                    {{ 'add_additional_address' | translate }} <i class="fa fa-plus"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

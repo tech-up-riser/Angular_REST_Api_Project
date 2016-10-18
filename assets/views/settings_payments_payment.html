@@ -1,0 +1,114 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+	<div class="row">
+		<div class="col-sm-8">
+			<h1 class="mainTitle" translate="sidebar.nav.pages.USERPROFILE">USER PROFILE</h1>
+		</div>
+	</div>
+</section>
+<!-- end: PAGE TITLE -->
+<!-- start: USER PROFILE -->
+<div class="container-fluid container-fullw bg-white">
+	<div class="row">
+		<div class="col-md-12 ">
+			<div class="space12">
+				<div class="btn-group">
+					<a class="btn btn-sm btn-primary btn-o" ui-sref="app.settings.password">
+						Password
+					</a>
+					<a class="btn btn-sm  btn-primary btn-o" ui-sref="app.settings.profile">
+						Profile
+					</a>
+					<a class="btn  btn-sm btn-primary btn-o active" ui-sref="app.settings.payments">
+						Payment
+					</a>
+					<a class="btn  btn-sm btn-primary btn-o" ui-sref="app.settings.billing">
+						Billing
+					</a>
+					<a class="btn  btn-sm btn-primary btn-o" ui-sref="app.settings.alerts">
+						Alerts
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12">
+				<fieldset>
+					<legend>
+						Payment Method
+					</legend>
+					<div class="form-group">
+						<label class="control-label">
+							Full Name
+						</label>
+						<input type="text" class="form-control" name="full_name" placeholder="Full Name">
+					</div>
+					<div class="form-group">
+						<label>
+							Card Number
+						</label>
+						<input type="text" class="form-control" name="cardNumber" ng-model="myModel.cardNumber" placeholder="Enter Your Card Number">
+					</div>
+					<label>
+						Expires
+					</label>
+					<div class="row">
+						<div class="col-md-4 col-sm-6">
+							<div class="form-group">
+								<select class="form-control" ng-model="myModel.expiresMonth">
+									<option value="" disabled>Month</option>
+									<option value="January">January</option>
+									<option value="February">February</option>
+									<option value="March">March</option>
+									<option value="April">April</option>
+									<option value="May">May</option>
+									<option value="June">June</option>
+									<option value="July">July</option>
+									<option value="August">August</option>
+									<option value="September">September</option>
+									<option value="October">October</option>
+									<option value="November">November</option>
+									<option value="December">December</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-4 col-sm-6">
+							<div class="form-group">
+								<select class="form-control" ng-model="myModel.expiresYear">
+									<option value="" disabled>Year</option>
+									<option value="2015">2015</option>
+									<option value="2016">2016</option>
+									<option value="2017">2017</option>
+									<option value="2018">2018</option>
+									<option value="2019">2019</option>
+									<option value="2020">2020</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<label>
+								Security code CVV
+							</label>
+							<div class="row">
+								<div class="col-xs-3">
+									<div class="form-group">
+										<input type="text" class="form-control" name="securityCode" placeholder="CVV" ng-model="myModel.securityCode">
+									</div>
+								</div>
+								<span class="help-inline col-xs-4"> <a href uib-popover="The security code is a three-digit number on the back of your credit card, immediately following your main card number." popover-placement="top" popover-title="How to find the security code"><i class="ti-help-alt text-large text-primary"></i></a> </span>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-actions">
+						<button type="submit" class="btn btn-primary btn-wide pull-left">
+							Save <i class="fa fa-arrow-circle-right"></i>
+						</button>
+					</div>
+
+				</fieldset>
+		</div>
+	</div>
+</div>
+<!-- end: USER PROFILE -->

@@ -1,0 +1,271 @@
+<div class="container-fluid container-fullw bg-white" ng-controller="ViewGrabCtrl">
+    <div class="row">
+        <uib-tabset class="tabbable">
+            <uib-tab active="tabs[0].active" heading="{{ 'grab_published_overview' | translate }}">
+                <div class="row">
+                    <div class="col-sm-8 margin-bottom-15">
+                        <img ng-src="{{Grab.media.image}}" alt='' style="max-width:100%;">
+                    </div>
+                    <div class="col-sm-8">
+                        <h4>{{Grab.title}}</h4>
+                        <p>{{Grab.description}}</p>
+                        <table class="table table-condensed">
+                            <tbody>
+                            <tr>
+                                <td>{{ 'grab_published_type' | translate }}:</td>
+                                <td><a href>{{ Grab.type.label_fr }}</a></td>
+                            </tr>
+                            <tr>
+                                <td>{{ 'grab_published_category' | translate }}:</td>
+                                <td><a href>{{ Grab.category.label_fr }}</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <hr/>
+
+                    <div class="col-sm-8">
+                        <h4>{{ 'grab_published_features' | translate }}</h4>
+                        <table class="table table-condensed">
+                            <tbody>
+                            <tr ng-show="Grab.grabtype">
+                                <td>{{ 'grabee_grabs_type' | translate }}</td>
+                                <td>
+                                    <a href="#">
+                                        {{Grab.grabtype}}
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr ng-show="Grab.bins">
+                                <td>{{ 'grab_create_grab_numberbins' | translate }}</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <span class="btn" ng-class="{'btn-primary ': Grab.bins == 1, 'btn-default': Grab.bins !== 1}">
+                                            <img style="width:30px;" src="img/pickup.png">
+                                        </span>
+                                        <span class="btn" ng-class="{'btn-primary ': Grab.bins == 2, 'btn-default': Grab.bins !== 2}">
+                                            <img style="width:30px;" src="img/pickup.png">
+                                            <img style="width:30px;" src="img/pickup.png">
+                                        </span>
+                                        <a class="btn" ng-class="{'btn-primary ': Grab.bins == 3, 'btn-default': Grab.bins !== 3}">
+                                            <img style="width:30px;" src="img/pickup.png">
+                                            <img style="width:30px;" src="img/pickup.png">
+                                            <span class="text-large">+</span>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr ng-show="Grab.size">
+                                <td>{{ 'grab_published_size' | translate }}</td>
+                                <td>
+                                    <a href="#">
+                                        {{Grab.size}}
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr ng-show="Grab.weight">
+                                <td>{{ 'grab_published_weight' | translate }}</td>
+                                <td>
+                                    <a href="#">
+                                        {{Grab.weight}}
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr ng-show="Grab.condition">
+                                <td>{{ 'grab_published_condition' | translate }}</td>
+                                <td>
+                                    <a href="#">
+                                        {{Grab.condition}}
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{ 'grab_published_placement' | translate }}</td>
+                                <td>
+                                    <a href="#">
+                                        {{Grab.placement}}
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr ng-if="Grab.container_placement">
+                                <td>Container Placement</td>
+                                <td>
+                                    <a href="#">
+                                        {{Grab.container_placement}}
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr ng-show="Grab.floor">
+                                <td>{{ 'grab_create_grab_floor' | translate }}</td>
+                                <td>
+                                    <a href>
+                                        {{Grab.floor}}
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr ng-show="Grab.type.value == 'grab'">
+                                <td>{{ 'grab_create_grab_elevator' | translate }}</td>
+                                <td>
+                                    <a href>
+                                        {{Grab.elevator}}
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm-8">
+                        <h4>{{ 'grab_published_location' | translate }}</h4>
+                        <table class="table table-condensed">
+                            <tbody>
+                            <tr>
+                                <td colspan="2">
+                                    <ui-gmap-google-map center="map.center"
+                                                        zoom="map.zoom"
+                                                        control='map.control'
+                                                        options="map.options">
+
+                                        <ui-gmap-marker ng-if="marker.coords.latitude && marker.coords.longitude"
+                                                        coords="marker.coords"
+                                                        idkey="marker.id"></ui-gmap-marker>
+                                    </ui-gmap-google-map>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{ 'grab_create_grab_address' | translate }}:</td>
+                                <td>
+                                    {{Grab.address.address}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{ 'grab_published_city' | translate }}:</td>
+                                <td>
+                                    {{Grab.address.city}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{ 'grab_published_province' | translate }}:</td>
+                                <td>
+                                    {{Grab.address.region}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{ 'grab_published_postalCode' | translate }}:</td>
+                                <td>
+                                    {{Grab.address.zipcode}}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-xs-12 col-sm-8" ng-if="Grab.schedules.length">
+                        <h4>{{ 'grab_published_availability' | translate }}</h4>
+                        <div ng-repeat="GrabSchedule in Grab.schedules">
+                            <p>
+                                <span class="btn-group">
+                                    <span class="btn btn-primary btn-o">
+                                        <i class="glyphicon glyphicon-calendar"></i> {{moment.utc(GrabSchedule.date).format("YYYY/MM/DD")}}
+                                    </span>
+                                    <span class="btn"
+                                          ng-class="{'btn-primary ': GrabSchedule.time == 'morning', 'btn-default': GrabSchedule.time !== 'morning'}">
+                                        {{ 'grab_create_grab_time_morning' | translate }}
+                                    </span>
+                                    <span class="btn"
+                                          ng-class="{'btn-primary ': GrabSchedule.time == 'afternoon', 'btn-default': GrabSchedule.time !== 'afternoon'}">
+                                        {{ 'grab_create_grab_time_afternoon' | translate }}
+                                    </span>
+                                    <span class="btn"
+                                          ng-class="{'btn-primary ': GrabSchedule.time == 'evening', 'btn-default': GrabSchedule.time !== 'evening'}">
+                                        {{ 'grab_create_grab_time_night' | translate }}
+                                    </span>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+            <uib-tab active="tabs[1].active" heading="{{ 'grab_published_bids' | translate }}">
+                <div class="row">
+                    <div class="bid" ng-repeat="Bid in Bids">
+                        <div class="col-xs-8 col-sm-9 no-padding">
+                            <div class="col-sm-5 col-xs-12">
+                                <img class="fa-round"
+                                style="padding:0px;max-height:30px;max-width:30px;float:left;margin-right:10px;"
+                                width="100%"
+                                ng-src="{{Bid.user.client.thumbnail}}"
+                                src="./assets/images/default-user.png"
+                                alt="{{Bid.user.client.fullName}}">
+                                <h4 style="padding:0px;float:left;margin-top:7px;">
+                                    {{Bid.user.client.fullName}}
+                                </h4>
+                            </div>
+                            <div class="col-sm-4 col-xs-12">
+                                <ul class="list-unstyled">
+                                    <li ng-repeat="BidSchedule in Bid.schedules" style="margin-bottom: 5px">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                        {{moment.utc(BidSchedule.date).format("YYYY/MM/DD")}}<br>
+                                        <small>{{BidSchedule.time}}</small>
+                                    </li>
+                                </ul>
+                            </div>
+                            <p class="col-sm-3 col-xs-12">
+                                <span class="badge " ng-class="{
+                                    'badge-primary': (Bid.status == 'available') || (Bid.status == 'accepted'),
+                                    'badge-danger': (Bid.status == 'declined'),
+                                    'badge-warning': (Bid.status == 'scheduled') || (Bid.status == 'completed'),
+                                    'badge-success': (Bid.status == 'delivered')}">
+                                    {{ 'grabee_dashboard_status_' + Bid.status | translate }}
+                                </span>
+                            </p>
+                        </div>
+
+                        <p class="col-sm-1 col-xs-4 text-large">
+                            {{Bid.amount}}$
+                        </p>
+                        <div id="dialog-confirm" title="{{ 'grab_published_acceptPayment' | translate }}" hidden>
+                            <p>
+                                <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+                                {{ 'grab_published_acceptPaymentMessage' | translate }}
+                            </p>
+                        </div>
+                        <div class="col-sm-2 col-xs-4 pull-right">
+                            <div class="btn-group" uib-dropdown>
+                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle"
+                                        uib-dropdown-toggle>
+                                    <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                    <li>
+                                        <a href ng-click="acceptBid(Bid)">
+                                            {{ 'grab_published_acceptBid' | translate }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href ng-click="declineBid(Bid)">
+                                            {{ 'grab_published_decline' | translate }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a ui-sref="app.grabee.grabber({id: Bid.user.ID})">
+                                            {{ 'grab_published_viewProfile' | translate }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12" ng-if="Bids.length">
+                        <uib-pagination total-items="Pages * itemsPerPage"
+                                        items-per-page="itemsPerPage"
+                                        max-size="10"
+                                        ng-model="Page"></uib-pagination>
+                    </div>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+</div>

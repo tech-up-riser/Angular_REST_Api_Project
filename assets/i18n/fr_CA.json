@@ -1,0 +1,684 @@
+{
+"section_screen_slug" : "fr",
+
+"login_login_title" : "Connexion",
+"login_login_email" : "Courriel",
+"login_login_password" : "Mot de passe",
+"login_login_required" : "Requis",
+"login_login_valid_email" : "S'il vous plaît, mettez une adresse courriel valide!",
+"login_login_forgotpassword" : "Mot de passe oublié",
+"login_login_session" : "Garder ma session active",
+"login_login_login" : "Bienvenue",
+"login_login_createAccount" : "Créer un compte",
+"login_login_fb" : "Inscrivez-vous avec Facebook",
+"login_login_invalid_credentials" : "Courriel ou mot de passe incorrect",
+
+"login_registration_auctioneer" : "Commissaire-priseur (grabee)",
+"login_registration_bidder" : "Soumissionnaire (grabber)",
+"login_registration_type_your_address" : "Tapez votre adresse",
+"login_registration_title" : "S'inscrire ",
+"login_registration_is_grabee" : "Usager",
+"login_registration_is_grabber" : "Grabber",
+"login_registration_legend1" : "Entrer vos informations sur votre compte ici",
+"login_registration_email" : "Courriel",
+"login_registration_street" : "Rue",
+"login_registration_region" : "Région",
+"login_registration_country" : "Pays",
+"login_registration_password" : "Mot de passe",
+"login_registration_passwordAgain" : "Confirmer votre mot de passe",
+"login_registration_legend2" : "Entrer vos informations personnelles ici",
+"login_registration_fullName" : "Nom complet",
+"login_registration_fullName_place_holder" : "Nom de l’adresse additionnelle",
+"login_registration_address" : "Adresse",
+"login_registration_postal" : "Code Postal",
+"login_registration_city" : "Ville",
+"login_registration_state" : "Province",
+"login_registration_Country" : "Pays",
+"login_registration_agree" : "Veuillez accepter",
+"login_registration_termsLink" : "les conditions d'utilisation",
+"login_registration_createAccount" : "Créer un compte",
+"login_registration_already" : "Vous avez déjà un compte ? ",
+"login_registration_login" : "S'identifier",
+"login_registration_email_is_required" : "Un courriel est requis",
+"login_registration_email_exists" : "Ce courriel est déjà pris pour un compte. Veuillez choisir un autre courriel.",
+"login_registration_password_is_required" : "Un mot de passe est requis",
+"login_registration_password_confirmation_is_required" : "Un mot de passe de nouveau est requis",
+"login_registration_password_should_be_6_char" : "Votre mot de passe doit contenir au moins 6 caractères.",
+"login_registration_full_name_is_required" : "Un nom complet est requis",
+"login_registration_address_is_required" : "Une adresse est requise",
+"login_registration_address_is_required2" : "Une Adresse est requise",
+"login_registration_zipcode_is_required" : "Un code postal est requis",
+"login_registration_city_is_required" : "Une ville est requise",
+"login_registration_region_is_required" : "Une province est requise",
+"login_registration_country_is_required" : "Un pays est requis",
+"login_registration_agree_is_required" : "Vous devez accepter les Conditions d'utilisation et la Politique de confidentialité pour créer votre compte.",
+"login_registration_email_is_unique" : "Ce courriel a déjà été utilisé",
+"login_registration_link_with_facebook" : "Lien avec le compte Facebook",
+"login_registration_link_with_facebook_alert" : "Votre compte sera associé à un profil Facebook!",
+"login_registration_title_alert" : "S'il vous plaît continuer l'inscription!",
+"login_registration_location_warning" : "Attention ! Nous n'acceptons que les inscriptions d’Usagers de La Prairie en ce moment.",
+
+"login_introduction_step" : "Étape",
+"login_introduction_text1" : "Grab est le service par excellence pour mieux gérer tout ce qui concerne vos déchets domestiques, de rénovations et les trucs que vous ne voulez plus. Soyez un bon citoyen, Utilisez Grab.",
+"login_introduction_text2" : "Grab permet à différents Grabbers de vous soumettre leur offre pour vous débarrasser facilement de ce que vous ne voulez plus. Vous recevez plusieurs offres et n'acceptez que celle que vous voulez",
+"login_introduction_text3" : "Une fois le grab complété, le Grabber vous renvoi une photo de votre vieille pile de bois, ou ce vieux évier en fonte et c'est terminé. Grab complète la transaction et vous pouvez donc évaluez le Grabber et vice versa.",
+"login_introduction_start" : "Commencer avec GRAB",
+
+"login_forgot_title" : "Vous avez oublié votre mot de passe?",
+"login_forgot_description" : " Entrer votre adresse courriel ici. Nous vous enverrons un lien pour réinitialiser votre mot de passe.",
+"login_forgot_reset_link" : " Un lien pour réinitialiser votre mot de passe a été envoyé à votre adresse courriel ",
+"login_forgot_email" : "Courriel",
+"login_forgot_login" : "Connexion",
+"login_forgot_submit" : "Envoyer",
+
+"my_grabs" : "Mes Collectes",
+"profile" : "Profil",
+
+"payment" : "Paiement",
+"payment_card" : "Carte",
+"payment_number" : "Numéro de la carte",
+"payment_addcard" : "Ajouter une carte",
+"payment_expiration_date" : "Date d’expiration",
+"payment_billing_save": "Enregistrer",
+
+"billing" : "Facturation",
+"password" : "Mot de passe",
+"alerts" : "Alertes",
+"logout" : "Se déconnecter",
+"grabber_profile" : "Profil du Grabber",
+"grabber_payment" : "Paiements du Grabber",
+"my_bids" : "Mes soumissions",
+
+"all_service_areas" : "Toutes les zones de service",
+"all_types" : "Tous les types",
+"all_categories" : "Toutes les catégories",
+"all_subcategories" : "Toutes les sous-catégories",
+"date_published" : "Date de publication",
+"number_of_bids" : "Nombre de soumissions",
+"pickup_date" : "Date de ramassage",
+
+"user_profile" : "PROFIL",
+"profile_info" : "Informations du profil",
+"file_too_large" : "Fichier trop large",
+"postal_code" : "Code Postal",
+"phone_number" : "Numéro de téléphone",
+"add_additional_address" : "Ajouter une adresse supplémentaire",
+"profile_location_warning" : "Attention ! Nous ne pouvons couvrir que les adresses de La Prairie en ce moment.",
+
+"messages" : "Messages",
+"native" : "SMS",
+"booking_alerts" : "Alertes de réservation",
+"calendar_events" : "Calendrier des événements",
+
+"checks_by_mail" : "Par la poste",
+"billing_mailing_address" : "Envoi de chèques",
+"different_address" : "Adresse différente",
+"interactive_email" : "Par courriel",
+"different_email" : "Courriel différent",
+"enter_a_postal_code" : "Entrez un code postal",
+"enter_your_address_and_street_name" : "Entrez votre adresse et nom de rue",
+"enter_your_city" : "Entrez votre ville",
+
+"update_password" : "Mise à jour du mot de passe",
+"existing_password" : "Mot de passe actuel",
+"new_password" : "Nouveau mot de passe",
+
+"grabber_profile_info" : "Informations du Profil Grabber",
+"grab_types" : "Types de Grab",
+"select_categories" : "Sélectionnez vos catégories",
+"select_sub_categories" : "Sélectionnez les sous-catégories",
+"select_service_areas" : "Sélectionnez vos zones de service",
+"vehicle_type" : "Votre véhicule",
+"missed_pickup_flat_rate" : "Prix de base pour une collecte manquée",
+
+"monday" : "Lundi",
+"tuesday" : "Mardi",
+"wednesday" : "Mercredi",
+"thursday" : "Jeudi",
+"friday" : "Vendredi",
+"saturday" : "Samedi",
+"sunday" : "Dimanche",
+
+"accepted" : "Accepté",
+"declined" : "Refusé",
+
+"grabee_dashboard_title" : "Tableau de bord",
+"grabee_dashboard_newGrab" : "GRAB-IT",
+"grabee_dashboard_grabit" : "Grab-it",
+"grabee_dashboard_grab" : "Grab-it",
+"grabee_dashboard_container" : "Conteneur",
+"grabee_dashboard_pickup" : "Collectes manquées",
+"grabee_dashboard_calendar" : "Calendrier",
+"grabee_dashboard_settings" : "Paramètres",
+"grabee_dashboard_missedPickup" : "Collecte Manquée",
+"grabee_dashboard_welcome" : "GRAB vous dit bonjour !",
+"grabee_dashboard_recent_bids": "SOUMISSIONS RÉCENTES",
+"grabee_dashboard_time_morning": "matinée",
+"grabee_dashboard_time_afternoon": "après-midi",
+"grabee_dashboard_time_evening": "soirée",
+"grabee_dashboard_status_declined": "Annulé",
+"grabee_dashboard_status_available": "Disponible",
+"grabee_dashboard_status_scheduled": "En cours",
+"grabee_dashboard_status_collected": "Complété ",
+"grabee_dashboard_status_delivered": "Livré",
+"grabee_dashboard_my_grabs" : "Mes collectes",
+
+"grabee_grabber_title" : "Grabber ",
+"grabee_grabber_vehicle" : "Véhicule",
+"grabee_grabber_type" : "Type",
+"grabee_grabber_placement" : "Endroit",
+"grabee_grabber_curbside" : "Extérieur",
+"grabee_grabber_carry_out" : "Intérieur",
+"grabee_grabber_areas" : "Secteur",
+"grabee_grabber_flatRate" : "Prix de base",
+"grabee_grabber_contact" : "Contact",
+"grabee_grabber_sendMessage" : "me rejoindre",
+"grabee_grabber_availability" : "disponibilité",
+"grabee_grabber_about" : "Aperçu",
+"grabee_grabber_rating" : "Évaluation",
+
+"grabee_grabs_title" : "Liste de mes collectes publiées",
+"grabee_grabs_type" : "Type",
+"grabee_grabs_all" : "Tous",
+"grabee_grabs_container" : "Conteneur",
+"grabee_grabs_pickup": "Ramasser",
+"grabee_grabs_garbage" : "Déchets",
+"grabee_grabs_recycling" : "Recyclage",
+"grabee_grabs_organic" : "Organique",
+"grabee_grabs_status" : "Statut",
+"grabee_grabs_draft" : "Brouillon",
+"grabee_grabs_published" : "Publié",
+"grabee_grabs_scheduled" : "Planifié",
+"grabee_grabs_completed" : "Complété",
+"grabee_grabs_cancelled" : "Annulé",
+"grabee_grabs_delivered" : "Livré",
+"grabee_grabs_reusable" : "réutilisable",
+"grabee_grabs_unsuable" : "inutilisable",
+"grabee_grabs_oversized" : "énorme",
+"grabee_grabs_bid" : "Offre",
+"grabee_grabs_bids" : "Offres",
+"grabee_grabs_view" : "Voir",
+"grabee_grabs_edit" : "Modifier",
+"grabee_grabs_save" : "Enregistrer",
+"grabee_grabs_cancel" : "Annuler",
+"grabbe_NoCreditCard" : "Aucune carte de crédit n'a été ajouté à votre profil - vous allez être redirigé.",
+
+"grab_header_create" : "Créé",
+"grab_header_published" : "Publié",
+"grab_header_scheduled" : "Planifié",
+"grab_header_complete" : "Achevé",
+"grab_create_grab_category" : "Catégorie",
+"grab_create_grab_subCategory" : "Sous-Catégorie",
+"grab_create_grab_imageUpload" : "Photo téléchargée",
+"grab_create_grab_title" : "Titre",
+"grab_create_grab_description" : "Description",
+"grab_create_grab_approxsize" : "Grandeur estimée",
+"grab_create_grab_weight" : "Poids estimé",
+"grab_create_grab_condition" : "Condition",
+"grab_create_grab_reusable" : "Réutilisable",
+"grab_create_grab_unusable" : "Inutilisable",
+"grab_create_grab_address" : "Adresse",
+"grab_create_grab_postal" : "Code Postal",
+"grab_create_grab_city" : "Ville",
+"grab_create_grab_province" : "Province",
+"grab_create_grab_sameProfile" : "Même que profil",
+"grab_create_grab_differentAddress" : "Adresse différente",
+"grab_create_grab_existingAddress" : "Sélectionnez une adresse existante",
+"grab_create_grab_profileAddress" : "adresse profil",
+"grab_create_grab_addressRequired" : "Une adresse actuelle est requise",
+"grab_create_grab_addNewAddress" : "Ajouter une nouvelle adresse",
+"grab_create_grab_yes" : "Oui",
+"grab_create_grab_no" : "Non",
+"grab_create_grab_selectFloor" : "Sélectionnez étage",
+"grab_create_grab_placement" : "Endroit",
+"grab_create_grab_location" : "Emplacement",
+"grab_create_grab_outside" : "À l'extérieur",
+"grab_create_grab_inside" : "À l'intérieur",
+"grab_create_grab_street" : "Rue",
+"grab_create_grab_curb" : "Bordure de trottoir",
+"grab_create_grab_entrance" : "Entrée",
+"grab_create_grab_backyard" : "Cour arrière",
+"grab_create_grab_container" : "Conteneur",
+"grab_create_grab_floor" : "Étage",
+"grab_create_grab_floor_side" : "Sur le côté",
+"grab_create_grab_floor_main" : "Principal",
+"grab_create_grab_floor_basement" : "Sous-sol",
+"grab_create_grab_elevator" : "Ascenseur",
+"grab_create_grab_availability" : "Disponibilité",
+"grab_create_grab_rightAway" : "Tout de suite",
+"grab_create_grab_setDates" : "Choisir dates",
+"grab_create_grab_date" : "Date",
+"grab_create_grab_time" : "Temps",
+"grab_create_grab_time_morning" : "Matinée",
+"grab_create_grab_time_afternoon" : "Après-midi",
+"grab_create_grab_time_night" : "Soirée",
+"grab_create_grab_actions" : "Actions",
+"grab_create_grab_actions_save" : "Sauvegarder",
+"grab_create_grab_schedule_save" : "Ajouter",
+"grab_create_grab_addThisAddressToProfile": "Ajouter",
+"grab_create_grab_actions_delete" : "Effacer",
+"grab_create_grab_actions_cancel" : "Annuler",
+"grab_create_grab_actions_publish" : "Publier",
+"grab_create_grab_size" : "Grandeur",
+"grab_create_grab_driveway" : "Entrée",
+"grab_create_grab_ifStreet" : "Vous devrez peut-être avoir besoin d'un permis",
+"grab_create_grab_all" : "All",
+"grab_create_grab_garbage" : "Déchets",
+"grab_create_grab_recycling" : "Recyclage",
+"grab_create_grab_yardwaste" : "Végétation",
+"grab_create_grab_organic" : "Organique",
+"grab_create_grab_numberbins" : "Chariots",
+"grab_create_grab_select" : "Sélectionner",
+"grab_create_grab_select_category" : "Sélectionner une catégorie",
+"grab_create_grab_availability_required": "Vos disponibilités sont requises",
+"grab_create_grab_floor_required" : "Le choix d'un étage est requis",
+"grab_create_grab_category_required" : "Le choix d'une catégorie est requis",
+"grab_create_grab_subcategory_required" : "Le choix d'une sous-catégorie est requis",
+"grab_create_grab_file_required" : " Le choix d'un fichier est requis.",
+"grab_create_grab_title_required" : "Le titre est requis.",
+
+"grab_published_overview" : "Aperçu",
+"grab_published_type" : "Type",
+"grab_published_category" : "Catégorie",
+"grab_published_features" : "Caractéristique",
+"grab_published_size" : "Grandeur",
+"grab_published_weight" : "Poids",
+"grab_published_condition" : "Condition",
+"grab_published_placement" : "Localisation",
+"grab_published_floor" : "Étage",
+"grab_published_elevator" : "Ascenseur",
+"grab_published_location" : "Localisation",
+"grab_published_city" : "Ville",
+"grab_published_province" : "Province",
+"grab_published_postalCode" : "Code Postal",
+"grab_published_availability" : "Disponibilité",
+"grab_published_rightAway" : "Dès que possible",
+"grab_published_bids" : "Offres",
+"grab_published_acceptPayment" : "Acceptez-vous l'offre?",
+"grab_published_acceptPaymentMessage" : "Votre carte de crédit sera débitée au montant de l'offre que vous êtes sur le point d'accepter.",
+"grab_published_acceptPayment_Yes" : "Oui",
+"grab_published_acceptPayment_No" : "Non",
+
+"grab_published_available" : "Disponible",
+"grab_published_cancelled" : "Annulé",
+"grab_published_acceptBid" : "Acceptez l'offre",
+"grab_published_decline" : "Refusez l'offre",
+"grab_published_viewProfile" : "Voir profil du Grabber",
+
+"grab_published_grabber_newBid" : "Nouvelle Offre",
+"grab_published_grabber_rightAway" : "Dès que possible",
+"grab_published_grabber_setDates" : "Activer la plage horaire",
+"grab_published_grabber_message" : "Message",
+"grab_published_grabber_placeBid" : "Publier une offre",
+
+"grab_scheduled_title" : "Votre Grab est planifié",
+"grab_scheduled_description" : "Votre Grab est en route",
+"grab_scheduled_completeGrab" : "Compléter Grab",
+"grab_scheduled_updatePrice" : "Mettre à jour le prix",
+"grab_scheduled_markComplete" : "Marquer comme complété",
+"grab_scheduled_reply" : "Répondre",
+"grab_scheduled_submit" : "Soumettre",
+
+"grab_completed_completed_title" : "Votre grab as été récupéré",
+"grab_completed_completed_description" : "Veuillez confirmer que votre grab as été récupéré dans les 24 prochaines heures",
+"grab_completed_pricePickup" : "Le coût de votre Grab est de: ",
+"grab_completed_confirm" : "Confirmer",
+"grab_completed_review" : "Évaluer votre Grabber",
+"grab_completed_onTime" : "À l'heure",
+"grab_completed_curteous" : "Courtois",
+"grab_completed_useful" : "Utile",
+"grab_completed_cleanliness" : "Propre",
+"grab_completed_comments" : "Commentaires",
+"grab_completed_submit" : "Soumettre",
+
+"grab_completed_grabber_completed_grabber_title" : "Votre Grab a été confirmé!",
+"grab_completed_grabber_completed_grabber_desc1" : "L'Usager a confirmé votre collecte au tarif que vous aviez convenu",
+"grab_completed_grabber_completed_grabber_desc2" : "Vous devez confirmer l'endroit où vous avez disposé le Grab afin de terminer la transaction et de recevoir votre paiement",
+"grab_completed_grabber_name" : "Nom",
+"grab_completed_grabber_address" : "Adresse",
+"grab_completed_grabber_category" : "Catégorie",
+"grab_completed_grabber_date" : "Date",
+"grab_completed_grabber_time" : "Moment",
+"grab_completed_grabber_submit" : "Soumettre",
+"grab_completed_grabber_reviewGrabee" : "Évaluation de l'Usager",
+"grab_completed_grabber_onTime" : "À l'heure",
+"grab_completed_grabber_curteous" : "Courtois",
+"grab_completed_grabber_useful" : "Utile",
+"grab_completed_grabber_cleanliness" : "Propre",
+"grab_completed_grabber_comments" : "Commentaires",
+
+"grabber_dashboard_seeGrabs" : "Trouver des collectes",
+"grabber_dashboard_calendar" : "Calendrier",
+"grabber_dashboard_recentBids" : "Soumissions récentes",
+"grabber_dashboard_numberOf" : "Nombres d'offres et de Grab",
+"grabber_dashboard_revenue" : "Revenus générés",
+
+"grabber_grabs_serviceArea" : "Secteur",
+"grabber_grabs_typeGrab" : "Type de Collecte",
+"grabber_grabs_pickupCategory" : "Catégorie de Grab",
+"grabber_grabs_trash" : "Poubelle",
+"grabber_grabs_pickup" : "Grab",
+"grabber_grabs_container" : "Conteneur",
+"grabber_grabs_seeCategoryofpickup" : "Équipements Électroniques",
+"grabber_grabs_seeMore" : "Voir plus",
+"grabber_grabs_placeBid" : "Soumettre une offre",
+"grabber_grabs_sortBy" : "Filtre",
+"grabber_grabs_rightAway" : "Dès que possible",
+"grabber_grabs_next7" : "7 prochains jours",
+"grabber_grabs_next14" : "14 prochains jours",
+"grabber_grabs_anytime" : "À tout moment",
+"grabber_grabs_in" : "dans",
+"grabber_grabs_rush" : "Urgent",
+"grabber_acceptFees" : "Frais",
+"grabber_acceptFees_Message" : "Acceptez-vous les frais? Ils seront chargés au moment où votre offre sera acceptée.",
+"grabber_acceptFees_Yes" : "Oui",
+"grabber_acceptFees_No" : "Non",
+"grabber_NoCreditCard" : "Aucune carte de crédit n'a été ajouté à votre profil - vous allez être redirigé.",
+
+"grabee_dashboard_status_accepted" : "Accepté",
+"grabee_dashboard_status_completed" : "Complété",
+
+"calendar_title" : "Calendrier",
+"calendar_today" : "Aujourd'hui",
+"calendar_year" : "An",
+"calendar_month" : "Mois",
+"calendar_week" : "Semaine",
+"calendar_day" : "Journée",
+"calendar_addEvent" : "Ajouter un événement",
+"calendar_sunday" : "Dimanche",
+"calendar_monday" : "Lundi",
+"calendar_tuesday" : "Mardi",
+"calendar_wednesday" : "Mercredi",
+"calendar_thursday" : "Jeudi",
+"calendar_friday" : "Vendredi",
+"calendar_saturday" : "Samedi",
+"calendar_filterType" : "Filtre par catégorie",
+
+"pagination_first" : "Premier",
+"pagination_last" : "Dernier",
+"pagination_next" : "Prochain",
+"pagination_previous" : "Précédent",
+
+  "grab_update_grab_profile_vehicle_required" : "Veuillez entrer votre type de véhicule",
+
+  "login" : {
+    "login" : {
+      "title" : "S'inscrire ",
+      "email" : "Courriel",
+      "password" : "Mot de passe",
+      "forgotpassword" : "Mot de passe oublié",
+      "session" : "Garder ma session active",
+      "login" : "S'identifier",
+      "createAccount" : "Créer un compte",
+      "fb" : "Se connecter avec Facebook"
+    },
+    "registration" : {
+      "title" : "Créer un compte",
+      "description" : "Entrez les détails de votre compte ci-dessous:",
+      "subtitle" : "Entrez vos données personnelles ci-dessous",
+      "createAccount" : "Créer votre compte",
+      "already" : "Vous avez déjà un compte?",
+      "login" : "Identifier."
+    },
+    "introduction" : {
+      "step" : "Étape",
+      "text1" : "Alors que vous devez disposer des déchets de façon écologique, il vous revient de les réutiliser, de les recycler ou de les reconditionner. C'est avantageux pour vous, pour les Usagers de Grab et pour l'environnement. Tout le monde est gagnant !",
+      "text2" : "Grab permet à pleins de «grabber» de vous soumettre leur offre pour vous débarrasser facilement de ce que vous ne voulez plus. Vous recevez des offres et accepter celle que vous voulez",
+      "text3" : "Une fois le grab complété, le grabber vous renvoi une photo de votre vieille pile de bois, ou ce vieux évier en fonte et c'est terminé. Grab complète la transaction et vous pouvez donc évaluez le grabber et vice versa.",
+      "start" : "Commencer avec Grab"
+    },
+    "forgot" : {
+      "title" : "Mot de passe oublié ?",
+      "description" : "Entrez votre courriel ci-dessous pour réinitialiser votre mot de passe.",
+      "login" : "S'identifier",
+      "submit" : "Soumettre"
+    }
+  },
+  "grabee" : {
+    "dashboard" : {
+      "title" : "Bienvenue chez Grab",
+      "createGrab" : "Je veux me débarrasser de",
+      "createMissed" : "Collecte Manquée",
+      "container" : "Conteneur"
+    }
+  },
+  "generic" : {
+  	"username" : "Nom d'Usager",
+  	"email" : "Courriel",
+  	"password" : "Mot de passe",
+  	"forgotpassword" : "Mot de passe oublié",
+    "passwordAgain" : "Mot de passe encore",
+    "fullName" : "Nom complet",
+    "address" : "Adresse",
+    "postal" : "Code Postal",
+    "city" : "Ville",
+    "state" : "Province",
+    "agreeTerms" : "J'accepte",
+    "agreeTermsLink" : "les termes et conditions",
+    "calendar" : "Calendrier",
+    "settings" : "Réglage"
+  },
+  "dashboard": {
+    "WELCOME": "Welcome to {{appName}}"
+  },
+  "topbar": {
+    "messages": {
+    	"MAIN": "Messages",
+      	"HEADER": "Messages non lus",
+      	"SEEALL": "Voir tout"
+    },
+
+    "activities": {
+      "MAIN": "Activités",
+      "HEADER": "Vous avez de nouvelles alertes",
+      "SEEALL": "Voir tout"
+    },
+    "user": {
+      "PROFILE": "Mon Profil",
+      "CALENDAR" : "My Calendar",
+      "MESSAGES" : "My Messages",
+      "LOCKSCREEN" : "Lock Screen",
+      "LOGOUT" : "Log Out"
+    }
+  },
+  "offsidebar": {
+    "chat": {
+      "ONLINE": "On-Line",
+      "OFFLINE": "Off-Line",
+      "BACK": "Back",
+      "SEND" : "Send",
+      "PLACEHOLDER": "Message"
+    },
+    "favorites": {
+      "MAIN": "Favorites"
+    },
+    "settings": {
+      "MAIN": "General Settings",
+      "NOTIFICATIONS": "Enable Notifications",
+      "SHOWEMAIL": "Show your E-mail",
+      "SHOWUSERS": "Show Offline Users",
+      "EMAILALERT": "E-mail Alerts",
+      "SMSALERT": "SMS Alerts",
+      "SAVE" : "Save Changes"
+    }
+  },
+  "sidebar": {
+    "heading": {
+      "NAVIGATION": "Main Navigation",
+      "FEATURES": "Core Features",
+      "DOCUMENTATION": "Documentation"
+    },
+    "search": {
+      "PLACEHOLDER": "Search..."
+    },
+    "nav": {
+      "dashboard": {
+      	"MAIN": "Dashboard"
+      },
+      "element": {
+      	"MAIN": "UI Elements",
+        "ELEMENTS": "Elements",
+        "BUTTONS": "Buttons",
+        "LINKS": "Link Effects",
+        "FONTAWESOME" : "Font Awesome Icons",
+        "LINEARICONS" : "Linear Icons",
+        "MODALS" : "Modals",
+        "TOGGLE" : "Toggle",
+        "TABS" : "Tabs & Accordions",
+        "PANELS" : "Panels",
+        "NOTIFICATIONS": "Notifications",
+        "SLIDERS": "Sliders",
+        "TREEVIEW": "TreeView",
+        "MEDIA": "Media",
+        "NESTABLE": "Nestable List",
+        "TYPOGRAPHY": "Typography"
+      },
+      "tables": {
+        "MAIN": "Tables",
+        "BASIC": "Basic Tables",
+        "RESPONSIVE": "Responsive Tables",
+        "DYNAMIC": "Dynamic Tables",
+        "DATA": "ngTable"
+      },
+      "forms": {
+        "MAIN": "Forms",
+        "ELEMENTS": "Form Elements",
+        "XEDITABLE": "X-Editable Elements",
+        "TEXTEDITOR": "Text Editor",
+        "WIZARD": "Form Wizard",
+        "VALIDATION": "Form Validation",
+        "CROPPING": "Image Cropping",
+        "UPLOAD": "Multiple File Upload"
+      },
+      "login": {
+        "MAIN": "Login",
+        "LOGIN": "Login Form",
+        "REGISTRATION": "Registration Form",
+        "FORGOT": "Forgot Password Form",
+        "LOCKSCREEN": "Lock Screen"
+      },
+      "pages": {
+        "MAIN": "Pages",
+        "USERPROFILE": "Profil",
+        "INVOICE": "Invoice",
+        "TIMELINE": "Timeline",
+        "CALENDAR": "Calendar",
+        "MESSAGES": "Messages",
+        "BLANKPAGE": "Starter Page"
+      },
+      "utilities": {
+        "MAIN": "Utilities",
+        "SEARCHRESULT": "Search Results",
+        "ERROR404": "Error 404",
+        "ERROR500": "Error 500",
+        "PRICING": "Pricing Table"
+      },
+      "3level": {
+        "MAIN": "3 Level Menu",
+        "Item1": {
+        	"MAIN": "Item 1",
+        	"LINK1" : "Sample Link 1",
+        	"LINK2" : "Sample Link 2",
+        	"LINK3" : "Sample Link 3"
+        },
+        "Item2": {
+        	"MAIN": "Item 2",
+        	"LINK1" : "Sample Link 1",
+        	"LINK2" : "Sample Link 2",
+        	"LINK3" : "Sample Link 3"
+        },
+        "Item3": {
+        	"MAIN": "Item 3",
+        	"LINK1" : "Sample Link 1",
+        	"LINK2" : "Sample Link 2",
+        	"LINK3" : "Sample Link 3"
+        }
+      },
+      "4level": {
+        "MAIN": "4 Level Menu",
+        "Item1": {
+        	"MAIN": "Item 1",
+        	"link1" : {
+        		"MAIN": "Sample Link 1",
+        		"LINK1" : "Link 1",
+        		"LINK2" : "Link 2",
+        		"LINK3" : "Link 3"
+        	},
+        	"link2" : {
+        		"MAIN": "Sample Link 2",
+        		"LINK1" : "Link 1",
+        		"LINK2" : "Link 2",
+        		"LINK3" : "Link 3"
+        	},
+        	"link3" : {
+        		"MAIN": "Sample Link 3",
+        		"LINK1" : "Link 1",
+        		"LINK2" : "Link 2",
+        		"LINK3" : "Link 3"
+        	}
+        },
+        "Item2": {
+        	"MAIN": "Item 2",
+        	"link1" : {
+        		"MAIN": "Sample Link 1",
+        		"LINK1" : "Link 1",
+        		"LINK2" : "Link 2",
+        		"LINK3" : "Link 3"
+        	},
+        	"link2" : {
+        		"MAIN": "Sample Link 2",
+        		"LINK1" : "Link 1",
+        		"LINK2" : "Link 2",
+        		"LINK3" : "Link 3"
+        	},
+        	"link3" : {
+        		"MAIN": "Sample Link 3",
+        		"LINK1" : "Link 1",
+        		"LINK2" : "Link 2",
+        		"LINK3" : "Link 3"
+        	}
+        },
+        "Item3": {
+        	"MAIN": "Item 3",
+        	"link1" : {
+        		"MAIN": "Sample Link 1",
+        		"LINK1" : "Link 1",
+        		"LINK2" : "Link 2",
+        		"LINK3" : "Link 3"
+        	},
+        	"link2" : {
+        		"MAIN": "Sample Link 2",
+        		"LINK1" : "Link 1",
+        		"LINK2" : "Link 2",
+        		"LINK3" : "Link 3"
+        	},
+        	"link3" : {
+        		"MAIN": "Sample Link 3",
+        		"LINK1" : "Link 1",
+        		"LINK2" : "Link 2",
+        		"LINK3" : "Link 3"
+        	}
+        }
+      },
+      "maps": {
+        "MAIN": "Maps"
+      },
+      "charts": {
+        "MAIN": "Charts"
+      }
+    }
+  },
+  "footer": {
+    "copyright": {
+    	"MAIN": "Copyright",
+      	"MESSAGE": "All rights reserved"
+    }
+  },
+  "setting": {
+  	"MAIN" : "Style Selector",
+    "FIXEDHEADER": "Fixed header",
+    "FIXEDSIDEBAR": "Fixed sidebar",
+    "CLOSEDSIDEBAR": "Closed sidebar",
+    "FIXEDFOOTER": "Fixed footer"
+  }
+}
